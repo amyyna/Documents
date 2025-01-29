@@ -1,0 +1,123 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc} 
+\usepackage[francais, english]{babel} 
+\usepackage{amsmath, amsthm}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{proof*}{Proof}
+
+\newtheorem{remark}{Remark}
+
+\usepackage[a4paper,left=2cm, right=2cm,top=3cm,bottom=3cm]{geometry}
+
+\usepackage{bm}
+\usepackage{amssymb,amsfonts}
+\usepackage{mathrsfs}
+\usepackage{color}
+%\usepackage{hyperref}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{algorithmicx}
+\usepackage[ruled]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{marginnote}
+\newcommand{\Ptr}{\mathcal P^{\rm tr}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\N}{\mathbb N}
+\newcommand{\calN}{\mathcal N}
+\newcommand{\calK}{\mathcal K}
+\newcommand{\calH}{\mathcal H}
+\newcommand{\calP}{\mathcal P}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Ktr}{\calK^{\rm tr}}
+\title{ \bfseries \Huge {Data compression for positive vectors}} 
+\author{  \scshape  Amina Benaceur }
+\date{\today}       
+\sloppy         
+\newcommand\red[1]{\textcolor{red} {#1} }
+\begin{document}
+	\maketitle
+	Let $N$ and $\calN$ be two integers such that $0<N\leq\calN$.
+	Suppose that we have a family of positive column vectors $(\bm a^1,\ldots,\bm a^N)\in\R_+^\calN$ forming the matrix $\bm A\in\R^{\calN\times N}$. 
+	We denote $X_N$ the space spanned by positive linear combinations of the vectors $(\bm a^1,\ldots,\bm a^N)$, i.e., 
+	$$
+	X_N = {\rm span}_+ \{\bm a^1,\ldots,\bm a^N\}.
+	$$
+	Let $n>0$ be an integer satisfying $n<N$.
+	The goal is to find a set of positive vectors that forms a good approximation space for $(\bm a^1,\ldots,\bm a^n)$.
+	Ideally, we search for the set of vectors $(\bm b^1,\ldots,\bm b^n)$ satisfying
+	\begin{equation}\label{eq:min}
+		(\bm b^1,\ldots,\bm b^n) = \underset{(\bm b^k)_{k=1}^n\in X_N}{\rm argmin }\ \underset{z\in {\rm span}_+ \{\bm b^k\}_{k=1}^n}{\rm argmin} \sum_{i=1}^{N}\|\bm a^i-z\|^2.
+	\end{equation}
+	In actual practice, the vectors $(\bm b^1,\ldots,\bm b^n)$ solution to problem~\eqref{eq:min} are difficult to compute.
+	We devise an algorithm that builds an alternate set of vectors $(\bm \xi^1,\ldots,\bm \xi^n)$ such that
+	\begin{equation}
+	\forall j\in\{1,\ldots,N\},\ \ \exists (\alpha^{j,1},\ldots\alpha^{j,n})\in\R_+^n:\quad	\bm a^j\approx \sum_{k=1}^n \alpha^{j,k} \bm \xi^k.
+	\end{equation}
+	It holds that $\bm A^T\bm A\in\R_+^{N\times N}$.
+	Additionally, if the columns of $\bm A$ are pairwise non-orthogonal, we get  $\bm A^T\bm A\in{(\R_+^*)}^{N\times N}$.
+	The Perron-Frobenius theorem thus ensures the existence of $\lambda^1\in\R_+^*$ and $\bm v^1\in(\R_+^*)^{N\times N}$ such that $\bm A^T\bm A\bm v^1 = \lambda^1\bm v^1$. 
+	We then set the first basis vector as $\bm \xi^1 = \bm v^1$.
+	Additionally, the residual vector $\bm r^{j,1}$ associated with $\bm a^j$satisfies 
+	\begin{equation}
+	\bm a^j = <\bm a^j, \bm \xi^1> \bm \xi^1+	\bm r^{j,1}.
+	\end{equation}
+	Note that $	\bm r^{j,1}$ is not necessarily positive.
+	Hence, we adjust the decomposition of $	\bm a^j$ as follows
+	\begin{equation}\label{eq:pos_dec}
+		\bm a^j = \left( <\bm a^j, \bm \xi^1> - \underset{1\leq i\leq N}{\rm max}\frac{<\bm a^j, \bm \xi^1>\xi^1_i -  a^j_i}{\xi^1_i}\right)\bm \xi^1 +\bm \psi^{j,1},
+	\end{equation}
+	\begin{proposition}
+		The decomposition in~\eqref{eq:pos_dec} is positive, i.e.
+		\begin{enumerate}
+			\item $\bm\xi^1\in(\R_+^*)^N$;
+			\item The coefficient $<\bm a^j, \bm \xi^1> - \underset{1\leq i\leq N}{\rm max}\frac{<\bm a^j, \bm \xi^1>\xi^1_i -  a^j_i}{\xi^1_i}$ is positive;
+			\item $\bm\psi^{j,1}\in\R_+^N$.
+		\end{enumerate}
+		\end{proposition}
+	\begin{proof}
+		It holds that $\bm\xi^1\in(\R_+^*)^N$ by construction.
+		
+		Second, we prove \textit{2}.
+		By definition, $a^j_i$ is positive for all $i,j\in\{1,\ldots,N\}$. Hence,
+		$$
+		\forall\ 1\leq i\leq N:\quad 
+		 <\bm a^j, \bm \xi^1>\ \geq \ <\bm a^j, \bm \xi^1>- \frac{ a^j_i}{\xi^1_i}.
+		$$
+		Maximizing over $i\in\{1,\ldots,N\}$, we get 
+		$$
+		 <\bm a^j, \bm \xi^1>\ \geq \underset{1\leq i\leq N}{\rm max}\frac{<\bm a^j, \bm \xi^1>\xi^1_i -  a^j_i}{\xi^1_i},
+		$$
+		whereof the positivity of the coefficient $<\bm a^j, \bm \xi^1>-\underset{1\leq i\leq N}{\rm max}\frac{<\bm a^j, \bm \xi^1>\xi^1_i -  a^j_i}{\xi^1_i}$.
+		
+		Let us now address \textit{3.}
+		It follows from~\eqref{eq:pos_dec} that 
+		$$
+		\begin{alignedat}{2}
+		\forall l\in\{1,\ldots,N\}:\quad 
+		\psi^{j,1}_l &= a^j_l - \left( <\bm a^j, \bm \xi^1> - \underset{1\leq i\leq N}{\rm max}\frac{<\bm a^j, \bm \xi^1>\xi^1_i -  a^j_i}{\xi^1_i}\right)\xi^1_l.\\
+		&=  a^j_l -  <\bm a^j, \bm \xi^1>\xi^1_l + \underset{1\leq i\leq N}{\rm max}\frac{<\bm a^j, \bm \xi^1>\xi^1_i -  a^j_i}{\xi^1_i}\xi^1_l.\\
+		&= -\frac{\left(<\bm a^j, \bm \xi^1>\xi^1_l - a^j_l\right) }{\xi^1_l} \xi^1_l
+		+ \underset{1\leq i\leq N}{\rm max}\frac{<\bm a^j, \bm \xi^1>\xi^1_i -  a^j_i}{\xi^1_i}\xi^1_l.\\
+		&= \left( \underset{1\leq i\leq N}{\rm max}\frac{<\bm a^j, \bm \xi^1>\xi^1_i -  a^j_i}{\xi^1_i}
+		- \frac{\left(<\bm a^j, \bm \xi^1>\xi^1_l - a^j_l\right) }{\xi^1_l} \right)\xi^1_l.
+		\end{alignedat}
+		$$
+		Both factors in the latter equality are positive, whereof the positivity of $\psi^{j,1}_l$ for all $l\in \{1,\ldots,N\}$.
+		It then follows that $\bm\psi^{j,1}\in\R_+^N$, which concludes the proof.
+	\end{proof}
+		We can then reiterate the same process at stage $k$ by applying the same strategy to the set of positive vectors 
+$(\bm\psi^{j,1},\ldots,\bm\psi^{j,N})$.
+We introduce the matrix $\bm\Psi^{k-1}\in\R_+^{N\times\calN}$ whose column vectors are $\bm\psi^k$ for $k\in\{1,\ldots,N\}$.
+The eigenvector associated with the dominant eigenvalue of the matrix $\bm\Psi^{k-1,T}\bm\Psi^{k-1}$ is denoted $\bm\xi^k$ so that $\bm\Psi^{k-1,T}\bm\Psi^{k-1}\bm\xi^k = \lambda^k\bm\xi^k$.
+Consequently, at stage $m\in\{0,\ldots,n\}$, such a strategy yields positive decompositions of the form
+\begin{equation}\label{eq:stage_m_pos_dec}
+		\bm a^j \approx \sum_{k=1}^m \alpha^{j,k}\bm \xi^k,\qquad \forall j\in\{1,\ldots,N\}.
+\end{equation}
+where, for all $j\in\{1,\ldots,N\}$ and $k\in \{1,\ldots, m\}$,
+\begin{equation}
+	\alpha^{j,k} = <\bm \psi^{j,k-1}, \bm \xi^k> - \underset{1\leq i\leq N}{\rm max}\frac{<\bm \psi^{j,k-1}, \bm \xi^k>\xi^k_i -  \psi^{j,k-1}_i}{\xi^k_i}.
+\end{equation}
+We then set define approximation space as ${\rm span_+}\{\bm A\bm\xi^1,\ldots,\bm A\bm\xi^n\}$.
+\end{document} 

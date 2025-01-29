@@ -1,0 +1,218 @@
+load "medit";
+string directory = "/Users/amina/Desktop/um6p_greedy/Navier-Stokes/";
+mesh Th = readmesh(directory+"river.msh");
+ifstream dataFile(directory+"data_LDR.txt");
+ifstream dirFile(directory+"dirich_labels.txt");
+ifstream thetadirichFile(directory+"dockingFile.txt");
+
+real L, D, R;
+dataFile >> L;
+dataFile >> D;
+dataFile >> R;
+
+int rightlabel, leftlabel;
+dirFile >> rightlabel;
+dirFile >> leftlabel;
+// cout << "rightlabel = " << rightlabel << endl;
+// cout << "leftlabel = " << leftlabel << endl;
+
+fespace Uh(Th, [P2b, P2b]);
+fespace Ph(Th, P1dc);
+
+Uh [ux, uy], [vx, vy], [dX,dY], [dux, duy], [lgx, lgy];
+Ph p, q, dp, lgp;
+
+//Macro
+macro Gradient(u) [dx(u), dy(u)] //
+macro Divergence(ux, uy) (dx(ux) + dy(uy)) //
+macro UgradV(ux,uy,vx,vy) [ [ux,uy]'*[dx(vx),dy(vx)] , [ux,uy]'*[dx(vy),dy(vy)] ]// EOM
+
+real arrns = 1e-6;
+int homogDir = 10;
+
+Ph uno = 1;
+real Mu;
+
+varf incompres([p],[ux, uy]) = int2d(Th)(p * Divergence(ux, uy));
+matrix CC = incompres(Ph,Uh);
+
+varf pres(q,p) = int2d(Th)(p);
+real[int] meanP = pres(0,Ph);
+
+int ndofu = Uh.ndof;
+int ndofp = Ph.ndof;  
+int ndof = ndofu + ndofp+1; // size of the total unknown (ux,uy,p,lambda)
+real[int] sol(ndof); // vectors to keep solution and rhs
+real[int] rhs(ndof);
+rhs = 0;
+Uh [uxprev, uyprev];
+Uh [uxSt,uySt];
+real lambda;
+real err;
+
+varf stiffness([ux, uy],[vx, vy]) = int2d(Th)((Gradient(ux)' * Gradient(vx) + Gradient(uy)' * Gradient(vy)));
+matrix KK1 = stiffness(Uh,Uh);
+
+ifstream compoFile(directory+"dockingFile.txt");
+int nbComponents;
+real trash;
+compoFile >> nbComponents;
+real[int] theta(2);
+real[int] transx(2);
+real[int] transy(2);
+for (int ji=0;ji<nbComponents;ji++) { compoFile>>trash; compoFile>>trash; compoFile>>trash; compoFile>>trash;  }
+for (int ji=0;ji<2;ji++) { compoFile>>theta[ji]; compoFile>>transx[ji]; compoFile>>transy[ji];
+	// cout << "ji = "<< " theta = " << theta[ji] << " transx = " << transx[ji] << " transy = " << transy[ji] << endl;
+}
+
+func rightparabolaX = cos(theta[0])*-3./4.*((-sin(theta[0])*x+cos(theta[0])*y+sin(theta[0])*transx[0]-cos(theta[0])*transy[0])^2-1.);
+func rightparabolaY = sin(theta[0])*-3./4.*((-sin(theta[0])*x+cos(theta[0])*y+sin(theta[0])*transx[0]-cos(theta[0])*transy[0])^2-1.);
+// func XX = x+L*cos(pi/4.)+3*D/2.;
+func leftparabolaX = cos(theta[1])*-3./4.*((-sin(theta[1])*x+cos(theta[1])*y+sin(theta[1])*transx[1]-cos(theta[1])*transy[1])^2-1.);
+func leftparabolaY = sin(theta[1])*-3./4.*((-sin(theta[1])*x+cos(theta[1])*y+sin(theta[1])*transx[1]-cos(theta[1])*transy[1])^2-1.);
+
+// varf dirout2([ux, uy],[vx, vy]) = int1d(Th,42,24)(vx+vy);
+// varf dirout2([ux, uy],[vx, vy]) = int1d(Th,42,24)(vx+vy);
+// real[int] Ydir2 = dirout2(0,Uh);
+//
+// Uh [ax,ay];
+// ax[] = Ydir2;
+// ay[] = Ydir2;
+// medit("left", Th, ax);
+
+/*
+ifstream intFile(directory+"intermediate_labels.txt");
+int trash;
+int[int] l1(2), l2(2), l3(2);
+intFile >> trash;
+intFile >> trash;
+intFile >> l1[0];
+intFile >> l1[1];
+intFile >> l2[0];
+intFile >> l2[1];
+intFile >> l3[0];
+intFile >> l3[1];
+cout << l1[0] << " "<< l1[1] <<endl;
+cout << l2[0] << " "<< l2[1] <<endl;
+cout << l3[0] << " "<< l3[1] <<endl;
+
+real invfactor = 1./sqrt(2);
+real trans1x = -L*cos(pi/4.)-3*D/2.*sin(pi/4.);
+real trans1y = L*sin(pi/4.)+3*D/2.*(1-cos(pi/4.));
+func YY = invfactor*(x+y-trans1x-trans1y);
+func rotparabola = -3./4.*invfactor*(YY^2-1.);
+
+varf bcst([ux, uy],[vx, vy]) = on(homogDir, ux=0., uy=0.) + on(rightlabel,l1[0],l1[1], ux=rightparabolaX, uy=rightparabolaY) + on(leftlabel, ux=leftparabolaX, uy=leftparabolaY) + on(l2[0],l2[1],l3[0],l3[0], ux=rotparabola, uy=-rotparabola);
+real[int] rhsuSt = bcst(0,Uh);
+
+varf boundaryst([ux, uy],[vx, vy]) = on(homogDir, ux=0., uy=0.) + on(rightlabel,leftlabel,l1[0],l1[1],l2[0],l2[1],l3[0],l3[0], ux=0., uy=0.);
+matrix BCst = boundaryst(Uh,Uh);
+
+matrix MuKK = KK1+BCst;
+matrix AlagSt = [
+             	 [MuKK,    CC,       0    ],
+             	 [CC',     0,        meanP],
+             	 [0,       meanP',   0    ]
+             	 	];// Matrix for full Stokes problem
+real[int] rhsSt(ndof);
+real[int] solSt(ndof);
+rhsSt(0:ndofu-1) = rhsuSt;// rhs part for ux,uy
+set(AlagSt, solver = sparsesolver);
+solSt = AlagSt^-1*rhsSt;// Solving the system 
+lgx[] = solSt(0:ndofu-1);
+lgy[] = solSt(0:ndofu-1);
+p[] = solSt(ndofu:ndofu+ndofp);
+cout << "Lift G : flow (left,mid,right) : ("  << abs(int1d(Th,44)(lgy))-1 << ", " <<abs(int1d(Th,24)(lgx*N.x+lgy*N.y))-1 <<", "<< int1d(Th,32)(lgx)-1 <<")" <<endl;
+ofstream fg(directory+"Offline/matrices/liftG.txt");
+fg << lgx[] << endl;
+medit("ubb", Th, [lgx,lgy]);
+// */
+
+
+
+
+varf bc([ux, uy],[vx, vy]) = on(homogDir, ux=0., uy=0.) + on(rightlabel, ux = rightparabolaX, uy = rightparabolaY) + on(leftlabel, ux = leftparabolaX, uy = leftparabolaY);
+real[int] rhsu = bc(0,Uh);
+
+varf boundary([ux, uy],[vx, vy]) = on(homogDir, ux=0., uy=0.) + on(rightlabel,leftlabel, ux=0., uy=0.);// + on(44, ux=0., uy=0.);
+matrix BC1 = boundary(Uh,Uh);
+
+
+// cout << "mu = " << trainset[0] << endl;
+int mu;
+for (int idmu=1; idmu<=50; idmu+=1){
+	mu = idmu;
+	Mu = 2./mu;
+    err = 0;
+	matrix MuKK = Mu*KK1+BC1;
+	matrix AlagS = [
+                 	 [MuKK,    CC,       0    ],
+                 	 [CC',     0,        meanP],
+                 	 [0,       meanP',   0    ]
+                 	 	];// Matrix for full Stokes problem
+	rhs(0:ndofu-1) = rhsu;// rhs part for ux,uy
+	set(AlagS, solver = sparsesolver);
+	sol = AlagS^-1*rhs;// Solving the system 
+	uxprev[] = sol(0:ndofu-1);
+	uyprev[] = sol(0:ndofu-1);
+	p[] = sol(ndofu:ndofu+ndofp);
+// 	lambda = sol(ndof-1);
+	uxSt[] = uxprev[]; 
+	uySt[] = uyprev[];
+	// medit("Stokes", Th, [uxprev,uyprev]);
+	//Iterative Newton for NS
+	for(int n=0; n<30; n++) {
+		varf convect([ux, uy],[vx,vy]) = int2d(Th)(UgradV(ux, uy, uxprev,uyprev)'*[vx,vy]+UgradV(uxprev,uyprev, ux, uy)'*[vx,vy]);//'
+		matrix CVC = convect(Uh,Uh);
+		matrix VELO = MuKK + CVC;
+		varf resi([ux, uy],[vx,vy]) = int2d(Th)(UgradV(uxprev,uyprev, uxprev,uyprev)'*[vx,vy]);//'
+		real[int] rhsresi = resi(0,Uh);
+		matrix AlagNS = [
+	                  		[VELO,    CC,       0    ],
+                 	 		[CC',     0,        meanP],
+                 	 		[0,       meanP',   0    ]
+                 	 	];// Matrix for full Stokes problem
+		rhs(0:ndofu-1) = rhsu + rhsresi ;// rhs part for ux,uy
+		set(AlagNS, solver = sparsesolver);
+		sol = AlagNS^-1*rhs;// Solving the system
+		ux[] = sol(0:ndofu-1);
+		uy[] = sol(0:ndofu-1);
+		p[] = sol(ndofu:ndof-2);
+  		dux[] = ux[] - uxprev[];
+  		duy[] = uy[] - uyprev[];
+  		err = sqrt(int2d(Th)(Gradient(dux)'*Gradient(dux)+Gradient(duy)'*Gradient(duy))) /
+    							sqrt(int2d(Th)(Gradient(uxprev)'*Gradient(uxprev) + Gradient(uyprev)'*Gradient(uyprev)));
+  		uxprev[] = ux[];
+  	    uyprev[] = uy[];
+		// cout << "  err= "<< err << endl;
+  	    if(err < arrns) { break; }
+	}
+	cout<< "Mu= "<<mu<<"  err= "<< err << "  div(u)= " << int2d(Th)(Divergence(ux,uy)*uno )<< "  int(p)= "<<int2d(Th)(p);
+	if(err > arrns) {
+		cout << "-- NS Warning : non convergence : err = " << err << " / eps = " << arrns;
+		}
+		cout << "  flow(left,mid,right) : ("  << abs(int1d(Th,leftlabel)(ux*N.x+uy*N.y))-1 << ", " << abs(int1d(Th,240)(ux*N.x+uy*N.y))-1 <<", "<< abs(int1d(Th,rightlabel)(ux*N.x+uy*N.y))-1 <<")" <<endl;
+		ofstream fsol(directory+"Offline/fem_sols/sol_"+string(mu)+".txt");
+		fsol << ux[] << endl;
+		dX[] = ux[] - uxSt[];
+		dY[] = uy[] - uySt[]; 
+		ofstream fdiff(directory+"Offline/fem_sols/diff_"+string(mu)+".txt");
+		fdiff << dX[] << endl;
+		// if (mu==20 || mu==30 || mu==40){medit("NS", Th, [ux,uy]);medit("diff", Th, [dX,dY]);}
+		// if (mu==20 || mu==30 || mu==40){medit("X", Th, [ux,uy]);}
+	}
+	/*
+varf a10([ux,uy],[vx,vy])= int2d(Th)(UgradV(ux,uy,lgx,lgy)'*[vx,vy]); //'
+matrix A10 = a10(Uh,Uh);
+ofstream fa10(directory+"Offline/galerkin/M10_A", binary);
+fa10 << A10 << endl;
+varf b10([ux,uy],[vx,vy])= int2d(Th)(UgradV(lgx,lgy,ux,uy)'*[vx,vy]); //'
+matrix B10 = b10(Uh,Uh);
+ofstream fb10(directory+"Offline/galerkin/M10_B", binary);
+fb10 << B10 << endl;
+
+varf g20([ux,uy],[vx,vy])= int2d(Th)(UgradV(lgx,lgy,lgx,lgy)'*[vx,vy]); //'
+real[int] G20 = g20(0,Uh);
+ofstream fg20(directory+"Offline/galerkin/G2_river_full", binary);
+fg20 << G20 << endl;
+	*/

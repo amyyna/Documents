@@ -1,0 +1,16 @@
+\begin{thebibliography}{1}
+
+\bibitem{benaceur2020reduced}
+Amina Benaceur, Alexandre Ern, and Virginie Ehrlacher.
+\newblock A reduced basis method for parametrized variational inequalities
+  applied to contact mechanics.
+\newblock {\em International Journal for Numerical Methods in Engineering},
+  121(6):1170--1197, 2020.
+
+\bibitem{niakh2023reduced}
+Idrissa Niakh, Guillaume Drouet, Virginie Ehrlacher, and Alexandre Ern.
+\newblock A reduced basis method for frictional contact problems formulated
+  with nitsche's method.
+\newblock {\em arXiv preprint arXiv:2307.11541}, 2023.
+
+\end{thebibliography}

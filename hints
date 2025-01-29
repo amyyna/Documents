@@ -1,0 +1,3 @@
+To install freefem without issues on ubuntu, use conda forge
+conda install conda-forge::freefemconda install conda-forge::freefem
+

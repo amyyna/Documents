@@ -1,0 +1,20 @@
+The primal space should be a Lorentz cone
+displacements are conic
+
+
+Niakh: The problem of contact with friction is recast as an unconstrained minimization problem using Nitsche's formulation
+
+
+We might need a small deformations assumption given how the problem is recast with positivity constraints only on the linear combination
+
+
+Kollepara: limitations of low-rank approximations https://hal.science/hal-03918970v1/file/preprint.pdf
+
+Niakh: contact as unconstrained minimization https://arxiv.org/pdf/2307.11541
+
+Solve it as a linear reduced problem with a non-linear basis:
+Positive linear combinations of a non-linear solutions
+
+https://math.stackexchange.com/questions/3449883/what-is-a-first-and-second-order-cone
+
+

@@ -1,0 +1,45 @@
+load "medit";
+string directory = "/Users/amina/Dropbox (MIT)/MIT_postdoc/greedy_theory/helmoltz/";
+// Parameters
+real kc2 = 1.;//1.
+func g = y*(1.-y);
+int meshdef = 40;
+// Mesh
+border a0(t=0., 1.){x=5.; y=1.+2.*t;}
+border a1(t=0., 1.){x=5.-2.*t; y=3.;}
+border a2(t=0., 1.){x=3.-2.*t; y=3.-2.*t;}
+border a3(t=0., 1.){x=1.-t; y=1.;}
+border a4(t=0., 1.){x=0.; y=1.-t;}
+border a5(t=0., 1.){x=t; y=0.;}
+border a6(t=0., 1.){x=1.+4.*t; y=t;}
+
+mesh Th = buildmesh(a0(meshdef) + a1(meshdef) + a2(meshdef) + a3(meshdef) + a4(meshdef) + a5(meshdef) + a6(meshdef));
+
+// Fespace
+fespace Uh(Th, P1);
+Uh u, v;
+
+// Solve
+int nbpar = 50;
+for(int mu=1; mu<=nbpar; mu=mu+1) {
+	kc2 = 1 + 0.05*mu;
+	solve sound(u, v) = int2d(Th)( u*v * kc2 - dx(u)*dx(v) - dy(u)*dy(v) ) - int1d(Th, a4)(g * v );
+	ofstream fsol(directory+"Offline/fem_sols/sol_"+string(mu)+".txt");
+	fsol << u[] << endl;
+	if (mu==1 || mu==20 || mu==40){medit("Solution", Th, u);}
+}
+// Plot
+
+varf stiff(u,v) = int2d(Th)((dx(u)*dx(v)+dy(u)*dy(v)));
+varf mass(u,v) = int2d(Th)(u*v);
+matrix MM = mass(Uh,Uh), KK = stiff(Uh,Uh);
+ofstream fstiff(directory+"Offline/matrices/stiff.txt");
+ofstream fmass(directory+"Offline/matrices/mass.txt");
+fmass << MM << endl;
+fstiff << KK << endl;
+
+varf Bnd(u,v) = int1d(Th,11,21,13,23)(v);
+	
+real[int] Fvx = Bnd(0,Uh);
+ofstream fvx(directory+"Offline/matrices/dirBnd.txt");
+fvx << Fvx << endl;

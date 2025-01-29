@@ -1,0 +1,99 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc} 
+\usepackage[francais, english]{babel} 
+\usepackage{amsmath, amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{proof*}{Proof}
+\newtheorem{definition}{Definition}
+
+\newtheorem{exercise}{Exercise}
+\newtheorem{question}{Question}
+
+\newtheorem{example}{Example}
+
+\newtheorem{remark}{Remark}
+
+\usepackage[a4paper,left=2cm, right=2cm,top=3cm,bottom=3cm]{geometry}
+\usepackage{cancel}
+\usepackage{bm}
+\usepackage{amssymb,amsfonts}
+\usepackage{mathrsfs}
+\usepackage{color}
+%\usepackage{hyperref}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{algorithmicx}
+\usepackage[ruled]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{marginnote}
+\newcommand{\Ptr}{\mathcal P^{\rm tr}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\N}{\mathbb N}
+\newcommand{\calN}{\mathcal N}
+\newcommand{\bP}{\bold P}
+\newcommand{\calK}{\mathcal K}
+\newcommand{\calF}{\mathcal F}
+\newcommand{\calH}{\mathcal H}
+\newcommand{\calP}{\mathcal P}
+\newcommand{\calC}{\mathcal C}
+\newcommand\red[1]{\textcolor{red} {#1} }
+\newcommand{\R}{\mathbb R}
+\newcommand{\bX}{\bar X}
+\newcommand{\Ktr}{\calK^{\rm tr}}
+\title{ \bfseries \Huge {Handout 3: Poisson processes }} 
+\date{Due date : }       
+\vspace{-1cm}        
+\newcounter{num}  % Create a new counter for paragraphs
+
+\setcounter{num}{1}  % Start the paragraph counter at 1
+\begin{document}
+	\maketitle
+	\paragraph{Exercise \thenum.}
+	Passengers arrive at a bus stop according to a Poisson process with rate $\lambda$. The arrivals of buses are exactly $t$ minutes apart. 
+	\begin{enumerate}
+		\item 
+	Show that on average, the sum of the waiting times of the riders on one of the buses is $\frac 1 2 \lambda t^2$.
+	\end{enumerate}
+	
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+	Suppose we have a couple of Poisson processes with rates $\lambda_1, \lambda_2$ respectively. 
+	For an interval of length $ \delta$ small enough, give an approximation of $P((k_1,k_2);\delta)$ for $k_1,k_2\in\{1,2\}$.
+	A student receives phone calls according to a Poisson process with rate $ \lambda$. 
+	Unfortunately she has lost her cell phone charger. 
+	The battery's remaining life is a random variable $T$ with mean $\mu$ and variance $\sigma^2$. Let $N(T)$ be the number of phone calls she receives before the battery dies.
+	\begin{enumerate}
+		\item Find $\rm E[N(T)]$ and ${\rm Var}[N(T)]$.
+	\end{enumerate}
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+On a whatsApp question-ans-answer group, $N \sim {\rm Pois}(\lambda_1)$ questions will be posted tomorrow, with $\lambda_1$ measured in questions/day. Given $N$ , the post times are i.i.d. and
+uniformly distributed over the day (a day begins and ends at midnight). 
+When a question is posted, it takes an ${\rm Exp}(\lambda_2)$ amount of time (in days) for an answer to be posted,
+independently of what happens with other questions.
+\begin{enumerate}
+	\item Find the probability that a question posted at a uniformly random time tomorrow will not yet have been answered by the end of that day.
+\end{enumerate}
+	
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+	In an endless football match, goals are scored according to a Poisson process with rate $\lambda$.
+	Each goal is made by team A with probability $p$ and team B with probability $1 ? p$. 
+	For $j > 1$, we say that the jth goal is a turnaround if it is made by a different team than the $(j ? 1)$st goal. 
+	For example, in the sequence AABBA, the 3rd and 5th goals are
+	turnarounds.
+	\begin{enumerate}
+		\item In $n$ goals, what is the expected number of turnarounds?
+		\item What is the expected time between turnarounds, in continuous time?
+	\end{enumerate}
+	
+	
+	
+	\paragraph{References and acknowledgments:} Introduction to probability (Blitzstein and Huang) 
+\end{document}

@@ -1,0 +1,58 @@
+load "iovtk";
+string directory = "/home/benaceur/Documents/greedy_algorithms/code/laplacian/";
+// Mesh specifications
+int meshdef = 10;
+int width = 1; //Pipe height
+int length = 2; //Pipe length	
+int meshWidth = 2*round(meshdef*width), meshLength = 2*round(meshdef*length);
+
+// Geometry construction
+
+border D1(t=0.5*length,1.5*length){x=t;y=-width/2.;label=11;};
+border Dp(t=-width/2.,width/2.){x=1.5*length;y=t;label=12;};
+border D2(t=1.5*length,0.5*length){x=t;y=width/2.;label=13;};
+border Ds(t=width/2.,-width/2.){x=0.5*length;y=t;label=14;};
+mesh ThNeg = buildmesh(D1(meshLength)+Dp(meshWidth)+D2(meshLength)+Ds(meshWidth));
+//plot("thNeg", ThNeg);
+
+// border b5(t=1., 0.){x=L/2+2*R*cos(2*pi*t); y=R*sin(2*pi*t); label=Wall;}; //Empty ellipse : obstacle
+border B1(t=0,2*length){x=t;y=-width;label=21;};
+border Bp(t=-width,width){x=2*length;y=t;label=22;};
+border B2(t=2*length,0){x=t;y=width;label=23;};
+border Bs(t=width,-width){x=0;y=t;label=24;};
+mesh ThPos = buildmesh(B1(meshLength)+Bp(meshWidth)+B2(meshLength)+Bs(meshWidth));
+//plot("thpos", ThPos);
+
+mesh Th = buildmesh(B1(2*meshLength)+Bp(2*meshWidth)+B2(2*meshLength)+Bs(2*meshWidth)+
+					D1(-meshLength)+Dp(-meshWidth)+D2(-meshLength)+Ds(-meshWidth));
+//plot(Th);
+
+savemesh(Th,directory+"squares.msh");
+
+fespace Uh(Th, P1);
+Uh u, v;
+
+int firstmu = 1, nbpar = 50;
+for(int mu=firstmu; mu<=firstmu+nbpar; mu=mu+1) {
+	solve Laplacian(u,v) = int2d(Th)(.1*mu*(dx(u)*dx(v)+dy(u)*dy(v))+sqrt(.5*mu)*u*v) - int2d(Th)(v)
+							+ on(21,22, u = 2) + on(11,12, u = 1);//+sqrt(.05*mu)*u*v
+	// medit("laplacian", Th, u);
+	ofstream fsol(directory+"Offline/fem_sols/sol_"+string(mu)+".txt");
+	fsol << u[] << endl;
+	if (mu==firstmu || mu==firstmu+nbpar/2|| mu==firstmu+nbpar-1){savevtk("solution.vtk", Th, u);system("paraview solution.vtk");}; 
+}
+
+
+varf stiff(u,v) = int2d(Th)((dx(u)*dx(v)+dy(u)*dy(v)));
+varf mass(u,v) = int2d(Th)(u*v);
+matrix MM = mass(Uh,Uh), KK = stiff(Uh,Uh);
+ofstream fstiff(directory+"Offline/matrices/stiff.txt");
+ofstream fmass(directory+"Offline/matrices/mass.txt");
+fmass << MM << endl;
+fstiff << KK << endl;
+
+varf Bnd(u,v) = int1d(Th,11,12,13,14,21,12,23,24)(v);
+	
+real[int] Fvx = Bnd(0,Uh);
+ofstream fvx(directory+"Offline/matrices/dirBnd.txt");
+fvx << Fvx << endl;
