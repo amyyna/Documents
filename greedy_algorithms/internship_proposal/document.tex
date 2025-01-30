@@ -1,0 +1,84 @@
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage{geometry}      % Page margins
+\usepackage{graphicx}      % For including images
+\usepackage{amsmath}       % For mathematical symbols and equations
+\usepackage{hyperref}      % For links and clickable table of contents
+\usepackage{longtable}     % For long tables
+\usepackage{fancyhdr}      % For customizing headers and footers
+\usepackage{xcolor}
+
+% Page Setup
+\geometry{top=1in, bottom=1in, left=1in, right=1in}
+\pagestyle{fancy}
+\fancyhead[L]{Internship Proposal}
+\fancyhead[R]{College of Computing - UM6P}
+
+\title{Internship Proposal: Greedy algirthms for subset selection}
+\author{
+	College of Computing, University Mohammed 6 Polytechnic \\
+}
+\date{\today}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section{Introduction}
+	In many engineering and physics problems, particularly in nonlinear and multiscale simulations, the size of the problem can make direct numerical solutions intractable. By reducing the number of degrees of freedom in the system—while maintaining accuracy—model reduction allows for more efficient and scalable simulations. 
+	Model reduction techniques, such as reduced basis methods or proper orthogonal decomposition (POD), can be used to reduce the dimensionality of numerical simulations of physical systems, making it possible to perform faster simulations while preserving the accuracy of the material response. This approach is particularly useful in structural and civil engineering, where efficiency and speed are critical.
+	
+	The goal of this internship is to explore how model reduction techniques can be applied to solve complex Partial Differential Equations (PDEs) with Lorentz cone-type constraints in problems of frictional contact at a first time, with a further application to elastoplasticity. 
+	The adopted numerical approach is twofold. First, we will adress the reduction of the model problem and the construction of a suitable reduced basis space while focusing only on the nonlinear constraint. 
+	Second, we will address any further nonlinearities to generalize the problem.
+	
+	One of the addressed model problems is that of contact mechanics. In contact mechanics with friction, the interaction between two deformable bodies can be governed by complex PDEs that account for both the elastic deformation and the frictional forces at the contact interface. 
+	%\iffalse
+	For example, when solving frictional contact problems, the Lorentz cone type constraint is given by:
+	
+	\begin{equation}
+		\mu\sqrt{u_y^2+u_z^2}\leq u_x, \quad \text{on } \Gamma_C,
+	\end{equation}
+	where $u_x$ is the displacement component normal to the contact surface $\Gamma_c$.
+	%\fi
+	
+	
+	\section{Milestones}
+	The internship will be conducted over 5 to 6 months, with the following major milestones:
+	\begin{enumerate}
+		\item Get familiarized with model reduction of PDEs and Lorentz cone type constraints.
+		\item Implement a proof-of-concept using Python.
+		\item Extend to elastoplacity.
+	\end{enumerate}
+	Upon completion of the internship, the expected outcomes are :
+	\begin{enumerate}
+		\item A code that performs model reduction on contact mechanics.
+		\item An application of the same code to elastoplasticity.
+		\item An academic internship report that will be amended throughout the duration of the internship.
+	\end{enumerate}
+	
+	
+	\section{Qualifications}
+	This internship is a research oriented end of studies project. It is better suited for students interested in pursuing a research path after completion of their degree. The intended start date is early 2025. Ideal candidates should have the following qualifications:
+	\begin{itemize}
+		\item Currently completing a masters' or engineering degree in applied mathematics, mechanical engineering, numerical simulation or a related field.
+		\item A solid understanding of PDEs and optimization.
+		\item Good knowledge and previous use of Python for academic projects or internships.
+		\item A solid understanding of finite elements is preferred, but not mandatory.
+	\end{itemize}
+	Note that successful internship outcomes may lead to a potential PhD project.
+	\section{How to apply}
+	If you are interested in this internship, please contact 
+	\begin{itemize}
+		\item Amina Benaceur : amina.benaceur@um6p.ma
+		%\item Mohammed-Khalil Ferradi : khalil.ferradi@um6p.ma
+	\end{itemize}
+	In your email, include a CV, a couple of potential references, a few lines explaining your interest in the internship, and your earliest starting date.
+	The email title should preferably use the format [ROM-Internship:FirstName-LastName-StartDate].
+	
+	%\textcolor{white}{\cite{niakh2023reduced, benaceur2020reduced}}
+	%\bibliographystyle{plain} 
+	%\bibliography{biblio}   
+	
+\end{document}

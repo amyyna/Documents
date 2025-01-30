@@ -1,0 +1,32 @@
+#  File created with Medit 3.0a
+#  Release Nov. 30, 2007
+# Created: Tue Nov  5 10:15:02 2024
+
+#  Assign background color
+BackgroundColor
+1.000000 1.000000 1.000000
+
+#  Window Size
+WindowSize
+975 779
+# Color palette
+Palette
+1.000000 1.131100 1.262200 1.393300 1.524400 
+
+# Subdomains colors
+NbMaterials
+2
+# Material MAT100 100
+Material MAT100 100
+0.20 0.20 0.20 1.00
+0.00 1.00 1.00 1.00
+0.40 0.40 0.40 1.00
+0.00 0.00 0.00 1.00
+80.00
+# Material MAT72 72
+Material MAT72 72
+0.20 0.20 0.20 1.00
+0.00 0.40 0.00 1.00
+0.40 0.40 0.40 1.00
+0.00 0.00 0.00 1.00
+80.00

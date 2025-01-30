@@ -1,7 +1,11 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[twocolumn,12pt,a4paper]{article}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc} 
 \usepackage[francais, english]{babel} 
+
+\pagestyle{empty} 
+
+
 \usepackage{amsmath, amsthm}
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}{Proposition}
@@ -16,7 +20,9 @@
 
 \newtheorem{remark}{Remark}
 
-\usepackage[a4paper,left=2cm, right=2cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[a4paper,left=.8cm, right=.8cm,top=1.5cm,bottom=1.5cm]{geometry}
+\setlength{\columnsep}{1.2cm}
+
 \usepackage{cancel}
 \usepackage{bm}
 \usepackage{amssymb,amsfonts}
@@ -43,29 +49,44 @@
 \newcommand{\R}{\mathbb R}
 \newcommand{\bX}{\bar X}
 \newcommand{\Ktr}{\calK^{\rm tr}}
-\title{ \bfseries \Huge {Handout 1: Random variables - Inequalities - Limit theorems }} 
-\date{Due date : February $3^{rd}$}       
-\vspace{-1cm}        
-\newcounter{num}  % Create a new counter for paragraphs
+\title{ \bfseries \Huge {Handout 1: RVs - Inequalities - Limit theorems }}    
+\vspace{-4cm}        
 
-\setcounter{num}{1}  % Start the paragraph counter at 1
+\date{Due date : February $3^{rd}$}       
+\vspace{-4cm}        
+\newcounter{num}  % Create a new counter for paragraphs
 \begin{document}
 	\maketitle
-	\paragraph{Brief recap \thenum.}
+\setcounter{num}{1}  % Start the paragraph counter at 1
+
+\thispagestyle{empty} 
+	\paragraph{Brief recap}
 	\begin{enumerate}
 		\item PMFs are usually more intuitive to retrieve for discrete rvs, whereas CDFs are more intuitive for continuous rvs.
-		\item For a PMF to be valid, it needs to satisfy two requirements, $p(e)\geq 0$ for any event, and $\sum_{i\in E} = 1$, where $E$ is the sample space.
-		\item For a PDFs $f$ to be valid, it needs to satisfy three requirements, $f\geq 0$ for any event, $f$ is piecewise continuous, and $\int_{-\infty}^\infty f(x)dx = 1$, where $E$ is the sample space. 
-		\item 
+		\item A PMF is valid iif, $p(e)\geq 0$ for any event, and $\sum_{i\in E} = 1$, where $E$ is the sample space.
+		\item A PDFs $f$ is valid iif : $f\geq 0$ for any event, $f$ is piecewise continuous, and $\int_{-\infty}^\infty f(x)dx = 1$.
+		\item A ${\rm Bern}(p)$ r.v. is the indicator of success in a Bernoulli trial with probability of success $p$.
+		\item A ${\rm Bin}(n, p)$ r.v. is the number of successes in $n$ independent Bernoulli trials, all with the same probability $p$ of success.
+		\item Cauchy-Schwarz and Jensen inequalities give bounds on expectations. 
+		Markov and Chebyshev inequalities give bounds
+		on tail probabilities.
+		\item The LLN and the CLT describe the behavior of the sample mean $\bar{X}_n$ of i.i.d. rvs $X_1, X_2, \dots$ with mean $\mu$ and variance $\sigma^2$. The LLN says that $P(\underset{n\rightarrow\infty}{\rm lim}\bar{X}_n = \mu$ with probability 1. 
+		The CLT says that 
+		$$
+		\sqrt{n} \left( \frac{\bar{X}_n - \mu}{\sigma} \right) \rightarrow \calN(0, 1)
+		$$
+		in distribution, which can be recast as
+		$$
+		\bar{X}_n \sim \calN\left(\mu, \frac{\sigma^2}{n}\right).
+		$$
 	\end{enumerate}
 	\paragraph{Exercise \thenum.}
-	Consider a sequence of independent Bernoulli trials, each with the same success probability $p \in [0, 1]$, with trials performed until a success occurs. Let $X$ be the number of failures before the first successful trial. 
+	Consider a sequence of independent Bernoulli trials, each with the same success probability $p \in ]0, 1[$, with trials performed until a success occurs. Let $X$ be the number of failures before the first successful trial. 
 	\begin{enumerate}
-		\item Determine $P (X = k)$.
-		\item Show that it is a valid PMF.
-		\item Calculate $E[X]$.
+		\item Determine $P (X = k)$ and show that it is a valid PMF.
+		\item Calculate $E[X]$ and $V[X]$.
 	\end{enumerate}
-	This distribution is called the geometric distribution $X\sim {\rm Geom}(p)$.
+	This is the geometric distribution $X\sim {\rm Geom}(p)$.
 	\stepcounter{num} 
 	\paragraph{Exercise \thenum.}
 	\begin{enumerate}
@@ -78,11 +99,21 @@
 	\begin{enumerate}
 		\item Benford's law states that in a very large variety of real-life data sets, the first digit approximately follows a particular distribution with about a 30\% chance of a 1, an 18\% chance of a 2, and in general
 		$$
-		P(D = j) = {\rm log}_{10}\left(\frac{j+1}{j}\right),\quad  \forall j \in \{1, 2, 3,\ldots, 9\}.
+		P(D = j) = {\rm log}_{10}\left(\frac{j+1}{j}\right),\quad  1\leq j\leq 9.
 		$$ 
 		where $D$ is the first digit of a randomly chosen element. Check that this is a valid PMF.
 	\end{enumerate}
 	
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+	There are $n$ eggs, each of which hatches a chick with probability $p$ (independently).
+	Each of these chicks survives with probability $r$, independently. \begin{enumerate}
+		\item What is the distribution of the number of chicks that hatch? 
+	\item What is the distribution of the number of chicks that
+	survive? 
+	\end{enumerate}
+	Give the PMFs; also give the names of the distributions and their parameters, if applicable.
 	
 	\stepcounter{num} 
 	\paragraph{Exercise \thenum.}
@@ -125,15 +156,15 @@
 	
 	\stepcounter{num} 
 	\paragraph{Exercise \thenum.}
-	Let $X$ be a non-negative rv and $a>0$ be some fixed number. 
+	For a non-negative rv $X$ and $a\in\R_+^*$ 
 	\begin{enumerate}
-		\item Show that a $\mathbb I _{|X|\geq a} \leq X$, where $\mathbb I $ is the indicator rv.
-		\item Prove the Markov inequality using the previous result.
+		\item Show that a $\mathbb I _{|X|\geq a} \leq X$ ($\mathbb I $ is the indicator rv).
+		\item Prove the Markov inequality using 1.
 	\end{enumerate}
 	
 		\stepcounter{num} 
 	\paragraph{Exercise \thenum.}
-	Let \( X \) be the number of purchases that Fred will make on the online site for a certain company (in some specified time period). Suppose that the probability mass function (PMF) of \( X \) is
+	Let \( X \) be the number of purchases you will make on the website of a company in a specified time period. Let the PMF of \( X \) be
 	
 	\[
 	P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \dots
@@ -141,9 +172,9 @@
 	
 	This distribution is called the Poisson distribution with parameter \( \lambda \), and it will be studied extensively in later chapters.
 	\begin{enumerate}
-		\item Find \( P(X \geq 1) \) and \( P(X \geq 2) \) using 2 different methods.
+		\item Find \( P(X \geq 1) \) and \( P(X \geq 2) \). %using 2 different methods.
 		
-		\item Suppose that the company only knows about people who have made at least one purchase on their site (a user sets up an account to make a purchase, but someone who has never made a purchase there doesn?t appear in the customer database). If the company computes the number of purchases for everyone in their database, then these data are draws from the conditional distribution of the number of purchases, given that at least one purchase is made. Find the conditional PMF of \( X \) given \( X \geq 1 \). (This conditional distribution is called a truncated Poisson distribution.)
+		\item Find the conditional PMF of \( X \) given \( X \geq 1 \). (This conditional distribution is called a truncated Poisson distribution.)
 	\end{enumerate}
 	
 	
@@ -152,7 +183,7 @@
 	In a national survey, a random sample of people are chosen and asked whether they support a certain policy. 
 	Assume that everyone in the population is equally likely to
 	be surveyed at each step, and that the sampling is with replacement.
-	Let n be the sample size, and let $\hat p$ and $p$ be the proportion of people who support the policy in the sample
+	Let $n$ be the sample size, and let $\hat p$ and $p$ be the proportion of people who support the policy in the sample
 	and in the entire population, respectively. 
 	Show that
 	\begin{equation}
@@ -172,7 +203,7 @@
 	\begin{enumerate}
 		\item Show that
 		$$
-		\frac{X_1+X_2+\ldots+X_n}{Y_1+Y_2+\ldots+Y_n}\rightarrow \frac{2}{3}
+		\frac{X_1+X_2+\ldots+X_n}{Y_1+Y_2+\ldots+Y_n}\underset{n\rightarrow\infty}{\rightarrow} \frac{2}{3}
 		$$
 		with probability 1. 
 		Does it matter whether the $X_i$ are independent of the $Y_j$ ?
@@ -188,8 +219,22 @@
 	\end{enumerate}
 	
 	
-	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+Let $Y \sim \text{Bin}(n, p)$, with $n\in\mathbb N^*$ and $p\in[0,1]$. 
+Show that 
+$$
+ Y\underset{n\rightarrow\infty}{\sim}\calN\left(np, np(1 - p)\right).
+$$	
 
-	
-	\paragraph{References and acknowledgments:} Introduction to probability (Blitzstein and Huang) - Stochastic Processes (Gallager)
+
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}
+	\begin{enumerate}
+	\item Let $Y = e^X$, with $X \sim \text{Expo}(3)$. Find the mean and variance of $Y$.
+\item For $Y_1, \dots, Y_n$ i.i.d. with the same distribution as $Y$ from the previous question, what is the approximate distribution of the sample mean $\bar{Y}_n = \frac{1}{n} \sum_{j=1}^{n} Y_j$ when $n$ is large?
+	\end{enumerate}
+
+
+	\paragraph{References:} Introduction to probability (Blitzstein and Huang), Stochastic Processes (Gallager).
 \end{document}

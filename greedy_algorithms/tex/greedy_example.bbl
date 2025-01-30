@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{pate}
+A.~Buffa, Y.~Maday, A.~T. Patera, C.~Prud'homme, and G.~Turinici.
+\newblock {\it {A} priori} convergence of the greedy algorithm for the
+  parametrized reduced basis method.
+\newblock {\em ESAIM Math. Model. Numer. Anal.}, 46(3):595--603, 2012.
+
+\bibitem{haasdonk13}
+B.~Haasdonk.
+\newblock Convergence rates of the {POD}-greedy method.
+\newblock {\em ESAIM Math. Model. Numer. Anal.}, 47(3):859--873, 2013.
+
+\end{thebibliography}
