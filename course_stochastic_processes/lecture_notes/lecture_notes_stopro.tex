@@ -293,8 +293,21 @@ If the $X_i$ have a highly skewed or multimodal distribution, we may need n to b
 \newpage
 \subsection{Stochastic processes}
 \begin{definition}
-	A discrete-time stochastic process is a set of random variables with values in a set $E$ indexed by time $(X_i)_{1\leq i\leq n}$. The space $E$ is called a state space. $E$ is a countable space. If $X_n = i$, then the process is said to be in state $i$ at time $n$.
+	We give two definitions
+	\begin{itemize}
+		\item 
+		A stochastic process is a sequence of random variables with values in a set $E$ indexed by time.
+		The space $E$ is called a state space. $E$ is a countable space. 
+		\item A stochastic process is a probability distribution over a set of paths
+	\end{itemize}
 	\end{definition}
+\paragraph{Examples:}
+\begin{enumerate}
+	\item Discrete-time stochastic process $(X_i)_{1\leq i\leq n}$. If $X_n = i$, then the process is said to be in state $i$ at time $n$.
+	\item Continuous time stochastic-process $(X_t)_{t\geq 0}$.
+\end{enumerate}
+
+
 
 	
 \paragraph{Examples of stochastic processes}
@@ -323,11 +336,192 @@ We state some further properties of the random walk
 \paragraph{Exercise:} A particle moves n steps on a number line. 
 	The particle starts at 0, and at each step it moves 1 unit to the right or to the left, with equal probabilities. 
 	Assume all steps are independent. 
-	Let $Z$ be the particle?s position after $n$ steps. Find the PMF of $Z$. We get
+	Let $Z$ be the particle?s position after $n$ steps. Find the PMF of $Z$. If k is an integer between ?n and n (inclusive) such that n+k is an even number, we get
 	$$ P(Z = k) = \binom{n}{\frac{n+k}{2}}\left(\frac{1}{2}\right)^n$$
-	
+	otherwise $ P(Z = k) = 0$
 	
 	For two positive integers $A$ and $B$, what is the probability that the random walk reaches $A$ before it reaches $-B$?
+	
+		
+		\subsection{Application to Fair Gambling Games}
+		
+		We took the high road for a while, but let?s now discuss random walks in a more conventional setting?gambling.
+		
+		A gambler goes to Las Vegas with $n$ in her pocket. 
+		Her plan is to make only $1$ bets and somehow she has found a casino that will offer her truly even odds; namely, she will win or lose $1$ on each bet with probability $\frac{1}{2}$. She?ll play until she is broke or she has won $m$. In the latter case, she will go home with
+		\[
+		w = n + m
+		\]
+		dollars. What?s the probability that she goes home a winner?
+		
+		This is identical to the flea problem that we just analyzed. Going broke is analogous to falling off the Cliff of Doom. Going home a winner is analogous to falling into the Pit of Disaster, just a lot more fun.
+		
+		Our analysis of Stencil?s life tells us everything we want to know about the gambler?s prospects:
+		\begin{itemize}
+			\item The gambler goes home broke with probability
+			\[
+			\frac{n}{n + m};
+			\]
+			\item The gambler goes home a winner with probability
+			\[
+			\frac{m}{n + m};
+			\]
+			\item The gambler goes home with probability
+			\[
+			\frac{n}{n + m} + \frac{m}{n + m} = 1;
+			\]
+			\item And the number of bets before the gambler goes home is expected to be
+			\[
+			n \cdot (w - n) = nm.
+			\]
+		\end{itemize}
+		
+		If the gambler gets greedy and keeps playing until she goes broke, then
+		\begin{itemize}
+			\item The gambler eventually goes broke with probability $1$, and
+			\item The number of bets before the gambler goes broke is expected to be infinite.
+		\end{itemize}
+		
+		The bottom line here is clear: when gambling, quit while you are ahead?if you play until you go broke, you will certainly go broke. And that?s the good news!
+		
+		Matters get much worse for the more typical scenario where the odds are against you. Let?s see why.
+		
+		\subsubsection{Gambler?s Ruin}
+		
+		So far, we have considered unbiased random walks, where the probability of moving up or down (or left or right) is $\frac{1}{2}$. Unfortunately, things are never quite this simple (or fair) in real casinos.
+		
+		For example, suppose the gambler goes to Las Vegas and makes $1$ bets on red or black in roulette. In this case, she will win $1$ with probability
+		\[
+		\frac{18}{38} \approx 0.473
+		\]
+		and she will lose $1$ with probability
+		\[
+		\frac{20}{38} \approx 0.527.
+		\]
+		That?s because the casinos add those bothersome green 0 and 00 to give the house a slight advantage.
+		
+		At first glance (or after a few drinks), $\frac{18}{38}$ seems awfully close to $\frac{1}{2}$ and so our intuition tells us that the game is ?almost fair.? So we might expect the analysis we just did for the fair game to be ?almost right? for the real game. For example, if the gambler starts with $100$ and quits when she gets ahead by $100$ in the fair game, then she goes home a winner with probability
+		\[
+		\frac{100}{200} = 0.5.
+		\]
+		And, if she wants to improve her chances of going home a winner, she could bring more money. If she brings $1000$ and quits when she gets ahead by $100$ in the fair game, then she goes home a winner with probability
+		\[
+		\frac{1000}{1100} \approx 0.91.
+		\]
+		
+		So, given that the real game is ?almost fair,? we might expect the probabilities of going home a winner in these two scenarios to be ?almost 50\% and 91\%,? respectively.
+		
+		Unfortunately for the gambler, all this ?almost? reasoning will almost surely lead to disaster. Here are the grim facts for the real game where the gambler wins $1$ with probability $\frac{18}{38}$.
+		
+		\[
+		\text{For } n = 100, \text{ probability she reaches } n + 100 \text{ before } 0: \text{ 1 in 37649.619496...}
+		\]
+		\[
+		\text{For } n = 1000, \text{ probability she reaches } n + 100 \text{ before } 0: \text{ 1 in 37648.619496...}
+		\]
+		
+		Except on the very low end, the amount of money she brings makes almost no difference! She is almost certain to go broke before winning $100$. Let?s see why.
+		
+		\subsubsection{Finding a Recurrence}
+		
+		We can approach the gambling problem the same way we studied the life of Stencil. Suppose that the gambler starts with $n$ dollars. She wins each bet with probability $p$ and plays until she either goes bankrupt or has $w = n + m$ dollars in her pocket. (To be clear, $w$ is the total amount of money she wants to end up with, not the amount by which she wants to increase her wealth, which is $m$.) Our objective is to compute $R_n$, the probability that she goes home a winner.
+		
+		As usual, we begin by identifying some boundary conditions. If she starts with no money, then she?s bankrupt immediately so $R_0 = 0$. On the other hand, if she starts with $w$ dollars, then she?s an instant winner, so $R_w = 1$.
+		
+		Now we divide the analysis of the general situation into two cases based on the outcome of her first bet:
+		\begin{itemize}
+			\item She wins her first bet with probability $p$. She then has $n + 1$ dollars and probability $R_{n+1}$ of reaching her goal of $w$ dollars.
+			\item She loses her first bet with probability $1 - p$. This leaves her with $n - 1$ dollars and probability $R_{n-1}$ of reaching her goal.
+		\end{itemize}
+		
+		Plugging these facts into the Total Probability Theorem gives the equation:
+		\[
+		R_n = p R_{n+1} + (1 - p) R_{n-1}.
+		\]
+		
+		\subsubsection{Solving the Recurrence}
+		
+		Rearranging the terms in the equation gives us a recurrence for $R_n$, the probability that the gambler reaches her goal of $w$ dollars if she starts with $n$:
+		\[
+		R_0 = 0,
+		\]
+		\[
+		R_w = 1,
+		\]
+		\[
+		p R_{n+1} - R_n + (1 - p) R_{n-1} = 0 \quad (0 < n < w).
+		\]
+		
+		The characteristic equation is:
+		\[
+		p x^2 - x + (1 - p) = 0.
+		\]
+		Using the quadratic formula, we get the roots:
+		\[
+		x = 1 \pm \frac{\sqrt{1 - 4p(1 - p)}}{2p}.
+		\]
+		If the gambler is equally likely to win or lose each bet, then $p = \frac{1}{2}$, and the characteristic equation has a double root at $x = 1$. This is the situation we considered in the flea problem. The general solution in this case is:
+		\[
+		R_n = a + b n.
+		\]
+		
+		Suppose that the gambler is not equally likely to win or lose each bet; that is, $p \neq \frac{1}{2}$. Then the two roots of the characteristic equation are different, leading to the general solution:
+		\[
+		R_n = a \left( \frac{1 - p}{p} \right)^n + b\times 1^n.
+		\]
+		In mathematical terms, this is where the fair game and the ``almost fair'' game take off in completely different directions: in one case we get a linear solution and in the other we get an exponential solution! This is going to be bad news for anyone playing the ``almost fair'' game.
+		
+		Anyway, substituting the boundary conditions into the general form of the solution gives a system of linear equations:
+		\[
+		0 = a + b
+		\]
+		\[
+		1 = a \left(\frac{1-p}{p} \right)^w + b
+		\]
+		Solving this system gives:
+		\[
+		a = \frac{1}{\left( \frac{1-p}{p} \right)^w - 1}, \quad b =- \frac{1}{\left(\frac{1-p}{p} \right)^w - 1}
+		\]
+		
+		Substituting these values back into the general solution gives:
+		\[
+		R_n =\left(\frac{1}{}\right) \left( \frac{1-p}{p} \right)^n \left( \frac{1-p}{p} \right)^{n - 1}
+		\]
+		
+		(Suddenly, Stencil's life doesn't seem so bad, huh?)
+		\paragraph{Bad news!}
+		We have an answer! But it's not good news. If the gambler starts with $n$ dollars and wins each bet with probability $p$, then the probability she reaches $w$ dollars before going broke is:
+		\[
+		\frac{\left( \frac{1-p}{p} \right)^n-1}{\left(\frac{1-p}{p} \right)^w-1}
+		\]
+		Let's try to make sense of this expression. If the game is biased against her, as with roulette, then $1 - p$ (the probability she loses) is greater than $p$ (the probability she wins). If $n$, her starting wealth, is also reasonably large, then both exponentiated fractions are big numbers and the $-1$'s don't make much difference. Thus, her probability of reaching $w$ dollars is very close to:
+		\[
+		\left( 1 - \frac{1}{p} \right)^{n-w} = \left( 1 - \frac{1}{p} \right)^m
+		\]
+		In particular, if she is hoping to come out $m = 100$ dollars ahead in roulette, then $p = \frac{18}{38}$ and her probability of success is:
+		\[
+		\left( \frac{10}{9} \right)^{-100} = \frac{1}{37648.619496}
+		\]
+		This explains the strange number we arrived at earlier! In fact, this number does not change no matter how large $n$ gets, so even if the gambler starts with a trillion dollars, she is still not likely to ever get ahead by even $100$.
+		
+		\textbf{But Why?}
+		
+		Why does the gambler's starting wealth have so little impact on her probability of coming out ahead? Intuitively, there are two forces at work. First, the gambler's wealth has random upward and downward swings due to runs of good and bad luck. Second, her wealth has a steady, downward drift because she has a small expected loss on every bet. The situation is illustrated in Figure 20.2.
+		
+		%\begin{figure}[h]
+		%	\centering
+		%	\includegraphics[width=0.5\textwidth]%{gambler_wealth.png} % Add your image path here
+%			\caption{In a biased random walk, the downward drift usually dominates swings of good luck.}
+		%\end{figure}
+		
+		For example, in roulette, the gambler wins a dollar with probability $\frac{18}{38}$ and loses a dollar with probability $\frac{20}{38}$. Therefore, her expected return on each bet is:
+		\[
+		1 \times \frac{18}{38} + (-1) \times \frac{20}{38} = \frac{2}{38} = \frac{1}{19}
+		\]
+		Thus, her expected wealth drifts downward by a little over 5 cents per bet.
+		
+		One might think that if the gambler starts with a billion dollars, then she will play for a long time, so at some point she should have a lucky, upward swing that puts her $100$ ahead. The problem is that her capital is steadily drifting downward. And after her capital drifts down a few hundred dollars, she needs a huge upward swing to save herself. And such a huge swing is extremely improbable. So if she does not have a lucky, upward swing early on, she's doomed forever. As a rule of thumb, drift dominates swings over the long term.
+		
 	
 	
 \newpage
