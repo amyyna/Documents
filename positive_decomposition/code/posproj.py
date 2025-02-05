@@ -52,40 +52,61 @@ def subtract_projection(matrix, eigenvector_unit_norm):
 
 # ---------------------------------- Applied ----------------------------------
 #------------------------------------------------------------------------------
-def calc_pos_resid(AA, col_vec_aj, egvec_xi_k):
+def calc_pos_resid(Axi_k, col_vec_aj):
     "Calculate the positive residual vector psi^{j,k}"
-    pos_proj_coef = np.dot(col_vec_aj, egvec_xi_k)
-    Axi_k = AA*egvec_xi_k
-    adjustment_coef = np.max((np.dot(col_vec_aj, egvec_xi_k)*Axi_k-col_vec_aj)/Axi_k)
-    egvec_coef = (pos_proj_coef - adjustment_coef)
-    psi_jk = col_vec_aj - egvec_coef*Axi_k
-    return egvec_coef, psi_jk
+    pos_proj_coef = np.dot(col_vec_aj, Axi_k)
+    #print(np.shape(Axi_k), np.shape(col_vec_aj))
+    adjustment_coef = np.max((pos_proj_coef*Axi_k-col_vec_aj)/Axi_k)
+    xi_k_coef = (pos_proj_coef - adjustment_coef)
+    psi_jk = col_vec_aj - xi_k_coef*Axi_k
+    return xi_k_coef, psi_jk
 
 #------------------------------------------------------------------------------
-def assemble_pos_resid_matrix(N, col_vecs_ajs, egvec_xi_k):
+def assemble_pos_resid_matrix(N, AA, egvec_v_k):
     "At iteration k, assemble the matrix of the positive residual vectors psi^{j,k}, for all j"
     column_vectors = []
     egvec_coef_list = []
+    Axi_k_basis = []
     for jj in range(N):
-        egvec_coef, psi_jk = calc_pos_resid(col_vecs_ajs, egvec_xi_k)
+        Axi_k = np.dot(AA, egvec_v_k)
+        Axi_k_basis.append(Axi_k)
+        #print(np.shape(AA), np.shape(egvec_v_k), np.shape(Axi_k))
+        egvec_coef, psi_jk = calc_pos_resid(Axi_k, AA[:,jj])
         column_vectors.append(psi_jk)
         egvec_coef_list.append(egvec_coef)
-    return egvec_coef_list, np.hstack(column_vectors)
+    new_A = np.column_stack(column_vectors)
+    #print(column_vectors)
+    return egvec_coef_list, new_A, Axi_k_basis
     
 #------------------------------------------------------------------------------
 def perform_algorithm(AA, N, nb_iterations):
-    basis = []
+    egvecs_basis = []
     AT_A = np.dot(AA.T, AA)
     compil_coef_lists = []
-    for jj in range(nb_iterations):
+    for kk in range(nb_iterations):
+        #print("kk = ", kk)
         lambda_1k, xi_k = compute_largest_eigen(AT_A)
-        basis.append(xi_k)
+        egvecs_basis.append(xi_k)
         #print(jj, xi_k)
-        egvec_coef_list, new_A = assemble_pos_resid_matrix(N, AA[:,jj], xi_k)
-        compil_coef_lists.append(egvec_coef_list)
+        xi_k_coef_list, new_A, Axi_k_basis = assemble_pos_resid_matrix(N, AA, xi_k)
+        compil_coef_lists.append(xi_k_coef_list)
         AT_A = np.dot(new_A.T, new_A)
-        print(new_A.T)
-    return compil_coef_lists, basis
+        #print(np.shape(new_A), np.shape(AT_A), np.min(new_A), np.max(new_A))
+    return compil_coef_lists, egvecs_basis, Axi_k_basis
+
+#------------------------------------------------------------------------------
+def reonstruct_positive_approximation(compil_coef_lists, egvecs_basis, Axi_k_basis):
+
+    for kk in range(N):
+        #print("kk = ", kk)
+        lambda_1k, xi_k = compute_largest_eigen(AT_A)
+        egvecs_basis.append(xi_k)
+        #print(jj, xi_k)
+        xi_k_coef_list, new_A, Axi_k_basis = assemble_pos_resid_matrix(N, AA, xi_k)
+        compil_coef_lists.append(xi_k_coef_list)
+        AT_A = np.dot(new_A.T, new_A)
+        #print(np.shape(new_A), np.shape(AT_A), np.min(new_A), np.max(new_A))
+    return compil_coef_lists, egvecs_basis, Axi_k_basis
 #------------------------------------------------------------------------------
 
 # Example usage:
@@ -110,5 +131,5 @@ print("All eigenvectors\n", np.matrix(eigenvectors).T)
 """
 #print("Residual matrix:\n", residual_matrix)
 n = 3
-compil_coef_lists, basis = perform_algorithm(AA, N, n)
+compil_coef_lists, basis, Axi_k_basis = perform_algorithm(AA, N, n)
 print("basis_eigen_vectors : ", basis)
