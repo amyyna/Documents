@@ -95,18 +95,14 @@ def perform_algorithm(AA, N, nb_iterations):
     return compil_coef_lists, egvecs_basis, Axi_k_basis
 
 #------------------------------------------------------------------------------
-def reonstruct_positive_approximation(compil_coef_lists, egvecs_basis, Axi_k_basis):
-
-    for kk in range(N):
-        #print("kk = ", kk)
-        lambda_1k, xi_k = compute_largest_eigen(AT_A)
-        egvecs_basis.append(xi_k)
-        #print(jj, xi_k)
-        xi_k_coef_list, new_A, Axi_k_basis = assemble_pos_resid_matrix(N, AA, xi_k)
-        compil_coef_lists.append(xi_k_coef_list)
-        AT_A = np.dot(new_A.T, new_A)
-        #print(np.shape(new_A), np.shape(AT_A), np.min(new_A), np.max(new_A))
-    return compil_coef_lists, egvecs_basis, Axi_k_basis
+def reconstruct_positive_approximation(compil_coef_lists, egvecs_basis, Axi_k_basis):
+    all_aj = [None]*n
+    for kk in range(n):
+        if kk==0:
+            all_aj[kk] = [compil_coef_lists[kk][jj]*Axi_k_basis[kk] for jj in range(N)]
+        else:
+            all_aj = [all_aj[kk-1][jj] + compil_coef_lists[kk][jj]*Axi_k_basis[kk] for jj in range(N)]
+    return all_aj
 #------------------------------------------------------------------------------
 
 # Example usage:

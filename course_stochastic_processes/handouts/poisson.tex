@@ -1,7 +1,11 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[twocolumn,12pt,a4paper]{article}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc} 
-\usepackage[francais, english]{babel} 
+\usepackage[english]{babel} 
+
+\pagestyle{empty} 
+
+
 \usepackage{amsmath, amsthm}
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}{Proposition}
@@ -16,7 +20,9 @@
 
 \newtheorem{remark}{Remark}
 
-\usepackage[a4paper,left=2cm, right=2cm,top=3cm,bottom=3cm]{geometry}
+\usepackage[a4paper,left=.8cm, right=.8cm,top=1.5cm,bottom=1.5cm]{geometry}
+\setlength{\columnsep}{1.2cm}
+
 \usepackage{cancel}
 \usepackage{bm}
 \usepackage{amssymb,amsfonts}
@@ -43,14 +49,60 @@
 \newcommand{\R}{\mathbb R}
 \newcommand{\bX}{\bar X}
 \newcommand{\Ktr}{\calK^{\rm tr}}
-\title{ \bfseries \Huge {Handout 3: Poisson processes }} 
-\date{Due date : }       
-\vspace{-1cm}        
-\newcounter{num}  % Create a new counter for paragraphs
+\title{ \bfseries \Huge {Handout 3: Bernoulli and Poisson processes }}    
+\vspace{-4cm}        
 
-\setcounter{num}{1}  % Start the paragraph counter at 1
+\date{Due date : February $24^{th}$}       
+\vspace{-4cm}        
+\newcounter{num}  % Create a new counter for paragraphs
 \begin{document}
 	\maketitle
+	\setcounter{num}{1}  % Start the paragraph counter at 1
+	
+	\thispagestyle{empty} 
+	\paragraph{Brief recap}
+	\begin{enumerate}
+			\item (Memorylessness) A distribution is said to be memoryless if a random variable $X$ from that distribution satisfies
+		$P(X \geq s + t \mid X \geq s) = P(X \geq t)$, for all $s, t > 0$.
+		\item  The PMF of interarrival times $Y_k$ in a Bernoulli process is given by:
+		\[
+		p_{Y_k}(t) = \binom{t-1}{k-1} p^k (1 - p)^{t-k}, \quad t = k, k+1, \dots,
+		\]
+		This is known as the Pascal PMF of order $k$.
+		\item A sequence of arrivals in continuous time is called a Poisson process with rate $\lambda$ if
+	\begin{enumerate}
+		\item The number of arrivals in disjoint time intervals are independent.
+		\item The number of arrivals in an interval of length $\tau$ is given by the Poisson distribution 
+		$
+		P(k,\tau) = \frac{(\lambda\tau)^k}{k!}e^{-\lambda\tau}.
+		$
+	\end{enumerate}	
+	\item The number of arrivals $N_\tau$ over an interval of length $\tau$ in a Poisson process satisfies $E[N_\tau] = \lambda\tau$ and $ V[N_\tau] = \lambda\tau$.
+	\item (Merging) Let $\{N_1(t)\}_{t > 0}$ and $\{N_2(t)\}_{t > 0}$ be independent Poisson processes with rates $\lambda_1$ and $\lambda_2$, respectively. 
+	The merged process $\{N (t) = N_1(t) + N_2(t)\}_{t > 0}$ is a Poisson process with rate $\lambda_1+\lambda_2$.
+	\item (Splitting) Let $\{N_1(t)\}_{t > 0}$ be a Poisson process with rate
+	$\lambda$, and classify each arrival in the process as a type-1 event with probability $p$ and a type-2 event with probability $1 - p$, independently. 
+	Then the type-1 events form a Poisson process with rate $\lambda p$, the type-2 events form a Poisson process with rate
+	$\lambda (1-p)$, and these two processes are independent.
+	\end{enumerate}
+
+
+
+
+	\paragraph{Exercise \thenum.}
+	$X$ is a random variable with memoryless distribution with CDF $F$ and PMF $p_i = P(X = i)$.
+	Find an expression for $P(X \geq j + k)$ in terms of $F(j)$, $F(k)$, $p_j$, $p_k$.
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+	Let $N_t$ be the number of arrivals up until time $t$ in a Poisson process of rate $\lambda$, and let $T_n$ be the time of the $n$-th arrival. Consider statements of the form
+	\[
+	P(N_t  \gtrless_1 \ n) = P(T_n \gtrless_2 \ t),
+	\]\\
+	where $\gtrless_1$ and $\gtrless_2$ are replaced by symbols from the list $<, \leq, \geq, >$. Which of these statements are true?
+	
+	
+	\stepcounter{num} 
 	\paragraph{Exercise \thenum.}
 	Passengers arrive at a bus stop according to a Poisson process with rate $\lambda$. The arrivals of buses are exactly $t$ minutes apart. 
 	\begin{enumerate}
@@ -67,12 +119,26 @@
 	Unfortunately she has lost her cell phone charger. 
 	The battery's remaining life is a random variable $T$ with mean $\mu$ and variance $\sigma^2$. Let $N(T)$ be the number of phone calls she receives before the battery dies.
 	\begin{enumerate}
-		\item Find $\rm E[N(T)]$ and ${\rm Var}[N(T)]$.
+		\item Find $ {\rm E}[N(T)]$ and ${\rm V}[N(T)]$.
 	\end{enumerate}
+	
+	
 	
 	\stepcounter{num} 
 	\paragraph{Exercise \thenum.}
-On a whatsApp question-ans-answer group, $N \sim {\rm Pois}(\lambda_1)$ questions will be posted tomorrow, with $\lambda_1$ measured in questions/day. Given $N$ , the post times are i.i.d. and
+	Emails arrive in your inbox according to a Poisson process with rate $\lambda$, measured in emails per hour.
+	Each email is studies-related with probability $p$ and personal with probability $1 - p$. 
+	The amount of time it takes to answer a studies-related email is a random variable with mean $\mu_W$ and variance $\sigma_W^2$. 
+	The amount of time it takes to answer a personal email has mean $\mu_P$ and variance $\sigma_P^2$.
+	The response times for different emails are independent.
+	
+	What is the average amount of time you have to spend answering all the emails that arrive in a $t$-hour interval? What about the variance?
+	
+	
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+On a whatsApp question-and-answer group, $N \sim {\rm Pois}(\lambda_1)$ questions will be posted tomorrow, with $\lambda_1$ measured in questions/day. Given $N$ , the post times are i.i.d. and
 uniformly distributed over the day (a day begins and ends at midnight). 
 When a question is posted, it takes an ${\rm Exp}(\lambda_2)$ amount of time (in days) for an answer to be posted,
 independently of what happens with other questions.
@@ -84,8 +150,8 @@ independently of what happens with other questions.
 	\stepcounter{num} 
 	\paragraph{Exercise \thenum.}
 	In an endless football match, goals are scored according to a Poisson process with rate $\lambda$.
-	Each goal is made by team A with probability $p$ and team B with probability $1 ? p$. 
-	For $j > 1$, we say that the jth goal is a turnaround if it is made by a different team than the $(j ? 1)$st goal. 
+	Each goal is made by team A with probability $p$ and team B with probability $1 - p$. 
+	For $j > 1$, we say that the jth goal is a turnaround if it is made by a different team than the $(j - 1)$st goal. 
 	For example, in the sequence AABBA, the 3rd and 5th goals are
 	turnarounds.
 	\begin{enumerate}
@@ -95,5 +161,30 @@ independently of what happens with other questions.
 	
 	
 	
-	\paragraph{References and acknowledgments:} Introduction to probability (Blitzstein and Huang) 
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+	Bees in a forest are distributed according to a 3D Poisson process with rate $\lambda$. 
+	What is the distribution of the distance from a hiker to the nearest bee?
+	
+	
+
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}
+		Suppose cars enter a one-way highway from a common entrance, following a Poisson process with rate $\lambda$. The $i$-th car has velocity $V_i$ and travels at this velocity forever; no time is lost when one car overtakes another car. Assume the $V_i$ are i.i.d. discrete random variables whose support is a finite set of positive values. The process starts at time 0, and we'll consider the highway entrance to be at location 0.
+		
+		For fixed locations $a$ and $b$ on the highway with $0 < a < b$, let $Z_t$ be the number of cars located in the interval $[a, b]$ at time $t$. (For instance, on an interstate highway running west to east through the midwestern United States, $a$ could be Kansas City and $b$ could be St. Louis; then $Z_t$ would be the number of cars on the highway that are in the state of Missouri at time $t$.) Figure 13.6 illustrates the setup of the problem and the definition of $Z_t$.
+		
+		Assume $t$ is large enough that $t > \frac{b}{V_i}$ for all possible values of $V_i$. Show that $Z_t$ has a Poisson distribution with mean $\lambda(b - a) \mathbb{E}(V_i^{-1})$.
+		
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+	Two students are independently performing independent Bernoulli trials. 
+	For concreteness, assume that student A is flipping a 1dH coin with probability $p_1$ of Heads and student B is flipping a 5dhs coin with probability $p_2$ of Heads. 
+	Let $X_1, X_2, \dots$ be student A's results and $Y_1, Y_2, \dots$ be student B's results, with $X_i \sim \text{Bern}(p_1)$ and $Y_j \sim \text{Bern}(p_2)$.
+	
+	Find the distribution and expected value of the first time at which they are simultaneously successful, i.e., the smallest $n$ such that $X_n = Y_n = 1$.
+	
+	
+	\paragraph{References and acknowledgments:} Introduction to probability (J. Blitzstein and J. Huang) - Introduction to probability (D. Bertsekas and J.  Tsitsiklis).
 \end{document}

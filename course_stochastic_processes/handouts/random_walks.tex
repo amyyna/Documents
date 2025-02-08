@@ -62,20 +62,41 @@
 	\thispagestyle{empty} 
 	\paragraph{Brief recap}
 	\begin{enumerate}
-	\item 	
+		\item A stochastic process is a sequence of random variables indexed by time.
+		Alternatively, a stochastic process is a probability distribution over a set of paths.
+	\item 	Let \( Y_1, Y_2, \dots \) be i.i.d. rvs s.t. \( Y_i = \pm 1 \) with equal probability. Let \( X_0 = 0 \) and
+	\begin{equation}\label{eq:rand_walk}
+		X_k = Y_1 + Y_2 + \cdots + Y_k,
+	\end{equation}
+	for all \( k \geq 1 \). This gives a probability distribution over the sequences $( X_0, X_1, X_2, \dots)$, and thus defines a discrete-time stochastic process. This process is known as the 1D simple (or symmetric) random walk.
+	By the CLT, for large enough $n$, the distribution of \( \frac{1}{\sqrt{n}} X_n \) converges to $\calN(0,1)$.
+	
 		\end{enumerate}
 
 
+\paragraph{Exercise \thenum.}{\bfseries (The results in this exercise are a continuation of the lecture, they are part of the mandatory learning material).}
+Consider the stochastic process defined in~\eqref{eq:rand_walk}.
+Prove the following statements:
+\begin{enumerate}
+	\item \( \mathbb{E}[X_k] = 0 \) for all \( k\geq 0 \).
+	\item (Independent increment) For all \( 0 = k_0 \leq k_1 \leq \dots \leq k_r \), the random variables \( X_{k_{i+1}} - X_{k_i} \) for \( 0 \leq i \leq r - 1 \) are mutually independent.
+	\item (Stationary) For all \( h \geq 1 \) and \( k \geq 0 \), the distribution of \( X_{k+h} - X_k \) is the same as the distribution of \( X_h \).
+\end{enumerate}
+
+
+
+\stepcounter{num}
 \paragraph{Exercise \thenum.}
 
 A CC student leaves Riad 9 after class.
-The student is walking along the Riads' walkable alley and is torn between making a trip to Palm's to chat with friends and going to the learning center to finish MCS123 homework. 
+The student is walking along the Riads' walkable alley and is torn between making a trip to Palm's to chat with friends and going to the learning center to do homework. 
 The student is $n$ steps from Palms' and $T-n$ steps from the learning center where $T \geq 3$ is the distance between Palms' and the
-learning center, both located on opposite ends of the Riads' walkable alley. 
+learning center, both located on opposite ends of the Riads' walkable alley.
+Suddenly, the student remembers MCS123 course and decides to play a game for probabilistic intuition to sink in.
 The student flips a coin at each step to decide which way to go. 
 With probability $p$, the student takes 2 steps toward the restaurant and with probability $1-p$, they take 1 step toward the learning center. 
 If the student is one or two steps away from Palms' and takes two steps toward it, then the student reaches Palms'. 
-If they are one step away from the learning center and take a step in its direction, then they reaches the learning center. 
+If they are one step away from the learning center and take a step in its direction, then they reach the learning center. 
 Let $X_n$ be the probability that the student reaches the
 restaurant before the learning center. 
 Assume that all coin tosses are mutually independent.
@@ -83,13 +104,21 @@ Find a recurrence for $X_n$. (You do not need to solve the recurrence)
 
 %X_n = p X_{n+2} + (1-p)X_{n-1}
 
+\iffalse
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}
+For two positive integers \( A \) and \( B \), what is the probability that a symmetric 1D random walk reaches \( A \) before it reaches \( -B \)? Let \( \tau \) be the first time at which the random walk reaches either \( A \) or \( -B \). Then \( X_\tau = A \) or \( -B \).
+\fi
+
 
 \stepcounter{num} 
 \paragraph{Exercise \thenum.}
-A particle moves $n$ steps on a number line. 
-The particle starts at 0, and at each step it moves 1 unit to the right or to the left, with equal probabilities. 
+An ant was hunting for food in a house.
+While the ant was walking on a rule in a drawer, someone sprayed insecticide, and poor ant got dizzy. 
+It moves $n$ steps on the rule. 
+The ant starts at 0, and at each step it moves 1 mm to the right or to the left, with equal probabilities. 
 Assume all steps are independent. 
-Let $Z$ be the particle's position after $n$ steps. 
+Let $Z$ be the ant's position after $n$ steps. 
 Find the PMF of $Z$. 
 %If k is an integer between −n and n (inclusive) such that n+k is an even number, we get
 %$$ P(Z = k) = \binom{n}{\frac{n+k}{2}}\left(\frac{1}{2}\right)^n$$
@@ -100,11 +129,11 @@ Find the PMF of $Z$.
 \paragraph{Exercise \thenum.}
 (Gambler's ruin). Two gamblers, A and B, make a sequence of
 1\$ bets. In each bet, gambler A has probability p of winning, and gambler B has probability $q = 1 - p$ of winning. Gambler A starts with i dollars and gambler B starts with $N - i$ dollars; the total wealth between the two remains constant since every time A loses a dollar, the dollar goes to B, and vice versa.
-We can visualize this game as a random walk on the integers between 0 and N , where p is the probability of going to the right in a given step: imagine a person who starts at position i and, at each time step, moves one step to the right with probability p and one step to the left with probability $q = 1 - p$. 
+We can visualize this game as a random walk on the integers between 0 and N , where p is the probability of going to the right in a given step: imagine a person who starts at position i and, at each time step, moves one step to the right with probability $p$ and one step to the left with probability $q = 1 - p$. 
 The game ends when either A or B is ruined, i.e., when the random walk reaches 0 or $N$. 
 What is the probability that A wins the game (walking away with all the money)?
 
-
+\iffalse
 \stepcounter{num} 
 \paragraph{Exercise \thenum.}
 An immortal drunk man wanders around randomly on the integers. 
@@ -115,5 +144,7 @@ Let $b$ be a googolplex (this is $10g$, where $g = 10^{100}$ is a googol).
 	\item Find a simple expression for the probability that the immortal drunk visits $b$ before returning to the origin for the first time.
 	\item Find the expected number of times that the immortal drunk visits $b$ before returning to the origin for the first time.
 \end{enumerate}
+\fi
 
+\paragraph{Acknowledgments: } J. Blitzstein, J. Huang, C. Lee, T. Leighton, M. Van Dijk.
 \end{document}
