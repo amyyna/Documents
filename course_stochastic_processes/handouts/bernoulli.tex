@@ -1,0 +1,175 @@
+\documentclass[twocolumn,12pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc} 
+\usepackage[english]{babel} 
+
+\pagestyle{empty} 
+
+\usepackage{tikzsymbols}
+\usepackage{textcomp}
+\usepackage{parskip}
+\usepackage{amsmath, amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{proof*}{Proof}
+\newtheorem{definition}{Definition}
+
+\newtheorem{exercise}{Exercise}
+\newtheorem{question}{Question}
+
+\newtheorem{example}{Example}
+
+\newtheorem{remark}{Remark}
+
+\usepackage[a4paper,left=.8cm, right=.8cm,top=1.5cm,bottom=1.5cm]{geometry}
+\setlength{\columnsep}{1.2cm}
+
+\usepackage{cancel}
+\usepackage{bm}
+\usepackage{amssymb,amsfonts}
+\usepackage{mathrsfs}
+\usepackage{color}
+%\usepackage{hyperref}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{algorithmicx}
+\usepackage[ruled]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{marginnote}
+\newcommand{\Ptr}{\mathcal P^{\rm tr}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\N}{\mathbb N}
+\newcommand{\calN}{\mathcal N}
+\newcommand{\bP}{\bold P}
+\newcommand{\calK}{\mathcal K}
+\newcommand{\calF}{\mathcal F}
+\newcommand{\calH}{\mathcal H}
+\newcommand{\calP}{\mathcal P}
+\newcommand{\calC}{\mathcal C}
+\newcommand\red[1]{\textcolor{red} {#1} }
+\newcommand{\R}{\mathbb R}
+\newcommand{\bX}{\bar X}
+\newcommand{\Ktr}{\calK^{\rm tr}}
+\title{ \bfseries \Huge {Handout 3: The Bernoulli process}}    
+\vspace{-4cm}        
+
+\date{Due date : February $24^{th}$}       
+\vspace{-4cm}        
+\newcounter{num}  % Create a new counter for paragraphs
+\begin{document}
+	\maketitle
+	\setcounter{num}{1}  % Start the paragraph counter at 1
+	
+	\thispagestyle{empty} 
+	\paragraph{Brief recap}
+	
+	\begin{enumerate}
+		\item (Memorylessness) A distribution is said to be memoryless if a random variable $X$ from that distribution satisfies
+		$P(X > s + t \mid X > s) = P(X > t)$, for all $s, t \geq 0$.
+		\item We define the Bernoulli process as a sequence \( X_1, X_2, \dots \) of i.i.d. Bernoulli random variables \( X_i \) where for each \( i \)
+	$$
+		P(X_i = 1) = P(\text{success at the } i\text{th trial}) = p,
+$$ $$
+		P(X_i = 0) = P(\text{failure at the } i\text{th trial}) = 1 - p,
+		$$
+		
+		\item  Let \( S \) be the number of successes in \( n \) i.i.d. trials of a Bernoulli process. \( \mathbf{ S \sim Bin(n,p)}\). 
+		Its PMF, mean, and variance are:
+		\[
+		P(S=k) = \binom{n}{k} p^k (1 - p)^{n-k}, \quad k = 0, 1, \dots, n,
+		\]
+		\[
+		E[S] = np, \quad \text{V}[S] = np(1 - p).
+		\]
+		\item Let \( T \) be the number of trials up to (and including) the first success in a Bernoulli process. \( \mathbf{ T \sim Geom(p)}\). 
+		Its PMF, mean, and variance are:
+		\[
+		P(T=t) = (1 - p)^{t-1} p, \quad t = 1, 2, \dots,
+		\]
+		\[
+		E[T] = \frac{1}{p}, \quad \text{V}[T] = \frac{1 - p}{p^2}.
+		\]
+		\item The geometric distribution is memoryless.
+		\item  	The number \( T - n \) of trials until the first success after time \( n \) has a geometric distribution with parameter \( p \), and is independent of the past.
+		\[
+		P(T - n = k) = (1 - p)^k p, \quad k = 0, 1, 2, \dots
+		\]
+		\item  For any given time \( n \), the sequence of random variables \( X_{n+1}, X_{n+2}, \dots \) (the future of the process) is also a Bernoulli process, and is independent from \( X_1, \dots, X_n \) (the past of the process).
+		\item  The PMF of arrival times $Y_k$ in a Bernoulli process is given by:
+		\[
+		P(Y_k = t) = \binom{t-1}{k-1} p^k (1 - p)^{t-k}, \text{ for } t \geq k,
+		\]
+		and 0 otherwise.
+		This is known as the {\bfseries Pascal PMF} of order $k$.
+		\end{enumerate}
+	
+	\paragraph{Exercise \thenum.}
+	$X$ is a random variable with memoryless distribution with CDF $F$ and PMF $p_i = P(X = i)$.
+	Find an expression for $P(X \geq j + k)$ in terms of $F(j)$, $F(k)$, $p_j$, $p_k$.
+	
+	
+
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}
+Suppose that, at the CC entrance, a taxi arrives every 5 minnutes, and the	probability that an arriving taxi is available (i.e. hasn't been specifically ordered by someone) is \( \frac{1}{5} \).
+	
+	\begin{enumerate}
+		\item Suppose you have just arrived at the entrance and are waiting for an available taxi. When you arrive, you just miss an available taxi. 
+		What is the probability that you will have to wait at least 15 minutes (3 taxi arrivals) for an available taxi?
+		
+		\item Suppose you have just arrived at the entrance and are waiting for an available taxi. When you arrive, you just miss an available taxi. 
+		What is the probability that you will have to wait at least 15 minutes (3 taxi arrivals) for an available taxi?
+		
+		\item Suppose you are at the entrance, and 10 taxis have arrived and left, and none of them was available. What is the probability that you will have to wait at least 16 minutes (3 taxi arrivals) for the next available taxi?
+	\end{enumerate}
+	
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+You noticed that you haven't left campus for quite a long time.
+Aiming for some greenery and fresh air, you decided to go on a hike to Ourika. 
+Yet, beautiful landscapes sometimes come with their own pitfalls.
+Each second, a mosquito lands on your neck with probability 0.5. If one lands, with probability 0.2 it bites you, and with probability 0.8 it never bothers you, independently of other mosquitoes.
+
+\begin{enumerate}
+	\item What is the expected time between consecutive mosquito bites? What is the variance of the time between consecutive mosquito bites?
+	
+	\item In addition, a bee lands on your neck with probability 0.05 (bees are generally peaceful). If one lands, with probability 0.7 it bites you, and with probability 0.3, it doesn't harm you, independently of any other insect bites (mosquitoes and other bees). 
+	Find the expected time between consecutive insect bites? 
+	Give the variance of the time between consecutive insect bites?
+\end{enumerate}
+
+
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}\label{ex:4}
+We perform an experiment comprising a series of independent trials. On each trial, we simultaneously flip a set of three fair coins.
+
+\begin{enumerate}
+	\item Given that we have just had a trial with 3 tails, what is the probability that both of the next two trials will also have this result?
+	
+	\item Whenever all three coins land on the same side in any given trial, the trial is called a success.
+	\begin{enumerate}
+		\item Find the PMF for \( K \), the number of trials up to, but not including, the second success.
+		
+		\item Find the expectation and variance of \( M \), the number of tails that occur before the first success.
+	\end{enumerate}
+\end{enumerate}
+
+
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}
+You ran out of exercises but you want to practice more for the midterm. Hence, you decide to make up one!
+You conduct an experiment like the one in exercise 4, except that you use 4 coins for the first trial, and then you obey the following rule: Whenever all of the coins land on the same side in a trial, you permanently remove one coin from the experiment and continue with the trials. 
+You follow this rule until the third time you remove a coin, at which point the experiment ceases (you've other courses to study for). 
+Find \( E[N] \), where \( N \) is the number of trials in your experiment.
+
+
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}
+Suppose there are \( n \) papers in a drawer. You draw a paper and sign it, and then, instead of filing it away, you place the paper back into the drawer. If any paper is equally likely to be drawn each time, independent of all other draws, what is the expected number of papers that you will draw before signing all \( n \) papers? You may leave your answer in the form of a summation.
+
+
+\paragraph{References and acknowledgments:} Introduction to probability (J. Blitzstein and J. Huang) - Introduction to probability (D. Bertsekas and J.  Tsitsiklis).
+%https://www.ucl.ac.uk/~ucakadl/LTCC/LTCC_Exehttps://www.ucl.ac.uk/~ucakadl/LTCC/LTCC_Exercises.pdfrcises.pdf
+\end{document}

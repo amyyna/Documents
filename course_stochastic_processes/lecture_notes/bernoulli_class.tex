@@ -1,0 +1,136 @@
+\documentclass[twocolumn,12pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc} 
+\usepackage[english]{babel} 
+
+\pagestyle{empty} 
+
+
+\usepackage{amsmath, amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{proof*}{Proof}
+\newtheorem{definition}{Definition}
+
+\newtheorem{exercise}{Exercise}
+\newtheorem{question}{Question}
+
+\newtheorem{example}{Example}
+
+\newtheorem{remark}{Remark}
+
+\usepackage[a4paper,left=.8cm, right=.8cm,top=1.5cm,bottom=1.5cm]{geometry}
+\setlength{\columnsep}{1.2cm}
+
+\usepackage{cancel}
+\usepackage{bm}
+\usepackage{amssymb,amsfonts}
+\usepackage{mathrsfs}
+\usepackage{color}
+%\usepackage{hyperref}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{algorithmicx}
+\usepackage[ruled]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{marginnote}
+\newcommand{\Ptr}{\mathcal P^{\rm tr}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\N}{\mathbb N}
+\newcommand{\calN}{\mathcal N}
+\newcommand{\bP}{\bold P}
+\newcommand{\calK}{\mathcal K}
+\newcommand{\calF}{\mathcal F}
+\newcommand{\calH}{\mathcal H}
+\newcommand{\calP}{\mathcal P}
+\newcommand{\calC}{\mathcal C}
+\newcommand\red[1]{\textcolor{red} {#1} }
+\newcommand{\R}{\mathbb R}
+\newcommand{\bX}{\bar X}
+\newcommand{\Ktr}{\calK^{\rm tr}}
+\title{ \bfseries \Huge {The Bernoulli process}}    
+\vspace{-4cm}        
+
+\author{Amina Benaceur}       
+\vspace{-4cm}        
+\newcounter{num}  % Create a new counter for paragraphs
+\begin{document}
+	\maketitle
+	\setcounter{num}{1}  % Start the paragraph counter at 1
+	
+	\thispagestyle{empty} 
+	\paragraph{Brief recap}
+	
+	\begin{enumerate}
+		\item Arrival processes (probability of one sequence)
+		\item We define the Bernoulli process as a sequence \( X_1, X_2, \dots \) of i.i.d. Bernoulli random variables \( X_i \) where for each \( i \)
+		$$
+		P(X_i = 1) = P(\text{success at the } i\text{th trial}) = p,
+		$$ $$
+		P(X_i = 0) = P(\text{failure at the } i\text{th trial}) = 1 - p,
+		$$
+		
+		\item  Let \( S \) be the number of successes in \( n \) i.i.d. trials of a Bernoulli process. \( \mathbf{ S \sim Bin(n,p)}\). 
+		Its PMF, mean, and variance are:
+		\[
+		P(S=k) = \binom{n}{k} p^k (1 - p)^{n-k}, \quad k = 0, 1, \dots, n,
+		\]
+		\[
+		E[S] = np, \quad \text{V}[S] = np(1 - p).
+		\]
+		
+		\item (Memorylessness) A distribution is said to be memoryless if a random variable $X$ from that distribution satisfies
+		$P(X \geq s + t \mid X \geq s) = P(X \geq t)$, for all $s, t > 0$.
+		\item Let \( T \) be the number of trials up to (and including) the first success in a Bernoulli process. \( \mathbf{ T \sim Geom(p)}\). 
+		Its PMF, mean, and variance are:
+		\[
+		P(T=t) = (1 - p)^{t-1} p, \quad t = 1, 2, \dots,
+		\]
+		\[
+		E[T] = \frac{1}{p}, \quad \text{V}[T] = \frac{1 - p}{p^2}.
+		\]
+		\item  	The number \( T - n \) of trials until the first success after time \( n \) has a geometric distribution with parameter \( p \), and is independent of the past.
+		\[
+		P(T - n = k) = (1 - p)^k p, \quad k = 0, 1, 2, \dots
+		\]
+		\item  For any given time \( n \), the sequence of random variables \( X_{n+1}, X_{n+2}, \dots \) (the future of the process) is also a Bernoulli process, and is independent from \( X_1, \dots, X_n \) (the past of the process).
+		\item \textbf{First string of losing days}.
+		\item  The PMF of arrival times $Y_k$ in a Bernoulli process is given by:
+		\[
+		P(Y_k = t) = \binom{t-1}{k-1} p^k (1 - p)^{t-k}, \text{ for } t \geq k,
+		\]
+		and 0 otherwise.
+		This is known as the {\bfseries Pascal PMF} of order $k$.
+	\end{enumerate}
+	
+	
+	\textbf{Exercice:} Suppose at the CC entrance a taxi arrives every 15 minutes, and the
+	probability that an arriving taxi is empty is \( \frac{1}{5} \).
+	
+	\begin{enumerate}
+		\item Suppose you have just arrived at the entrance and are waiting for an e
+		\textbf{Exercice:} Suppose at the CC entrance a taxi arrives every 15 minutes, and the
+		probability that an arriving taxi is empty is \( \frac{1}{5} \).
+		
+		\begin{enumerate}
+			\item Suppose you have just arrived at the entrance and are waiting for an empty taxi. When you arrive, you just miss an empty taxi. 
+			What is the probability that you will have to wait at least 45 minutes (3 taxi arrivals) for an empty taxi?
+			
+			\item Suppose you have just arrived at the entrance and are waiting for an empty taxi. When you arrive, you just miss an empty taxi. 
+			What is the probability that you will have to wait at least 45 minutes (3 taxi arrivals) for an empty taxi?
+			
+			\item Suppose you are at the entrance, and 10 taxis have arrived and left, and
+			none of them was empty. What is the probability that you will
+			have to wait at least 45 minutes (3 taxi arrivals) for the next empty taxi?
+		\end{enumerate}mpty taxi. When you arrive, you just miss an empty taxi. 
+		What is the probability that you will have to wait at least 45 minutes (3 taxi arrivals) for an empty taxi?
+		
+		\item Suppose you have just arrived at the entrance and are waiting for an empty taxi. When you arrive, you just miss an empty taxi. 
+		What is the probability that you will have to wait at least 45 minutes (3 taxi arrivals) for an empty taxi?
+		
+		\item Suppose you are at the entrance, and 10 taxis have arrived and left, and
+		none of them was empty. What is the probability that you will
+		have to wait at least 45 minutes (3 taxi arrivals) for the next empty taxi?
+	\end{enumerate}
+\end{document}
