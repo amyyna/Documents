@@ -1,0 +1,118 @@
+\documentclass[article,12pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc} 
+\usepackage[english]{babel} 
+
+\pagestyle{empty} 
+
+
+\usepackage{amsmath, amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{proof*}{Proof}
+\newtheorem{definition}{Definition}
+
+\newtheorem{exercise}{Exercise}
+\newtheorem{question}{Question}
+
+\newtheorem{example}{Example}
+
+\newtheorem{remark}{Remark}
+
+\usepackage[a4paper,left=.8cm, right=.8cm,top=1.5cm,bottom=1.5cm]{geometry}
+\setlength{\columnsep}{1.2cm}
+
+%\usepackage{cancel}
+\usepackage{bm}
+\usepackage{amssymb,amsfonts}
+\usepackage{mathrsfs}
+\usepackage{color}
+%\usepackage{hyperref}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{algorithmicx}
+\usepackage[ruled]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{marginnote}
+\newcommand{\Ptr}{\mathcal P^{\rm tr}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\N}{\mathbb N}
+\newcommand{\calN}{\mathcal N}
+\newcommand{\bP}{\bold P}
+\newcommand{\calK}{\mathcal K}
+\newcommand{\calF}{\mathcal F}
+\newcommand{\calH}{\mathcal H}
+\newcommand{\calP}{\mathcal P}
+\newcommand{\calC}{\mathcal C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\bX}{\bar X}
+\newcommand{\Ktr}{\calK^{\rm tr}}
+\title{ \bfseries \Huge {Handout 3: Bernoulli and Poisson processes }}    
+\vspace{-4cm}        
+
+\date{Due date : February $24^{th}$}       
+\vspace{-4cm}        
+\newcounter{num}  % Create a new counter for paragraphs
+\begin{document}
+	\maketitle
+	\setcounter{num}{1}  % Start the paragraph counter at 1
+	
+	\thispagestyle{empty} 
+	\paragraph{Brief recap}
+	\begin{enumerate}
+		\item 
+	\end{enumerate}
+	
+	
+		
+		\stepcounter{num} 
+		\paragraph{Exercise \thenum.}
+		Let $X_i$ ($i = 1, 2, \dots$) be i.i.d. random variables with mean 0 and variance 2; $Y_i$ ($i = 1, 2, \dots$) be i.i.d. random variables with mean 2. Assume that all variables $X_i$, $Y_j$ are independent. Consider the following statements:
+		
+		\begin{enumerate}
+			\item[(A)] $\frac{X_1 + \dots + X_n}{n}$ converges to 0 in probability as $n \to \infty$.
+			\item[(B)] $\frac{X_1^2 + \dots + X_n^2}{n}$ converges to 2 in probability as $n \to \infty$.
+			\item[(C)] $\frac{X_1 Y_1 + \dots + X_n Y_n}{n}$ converges to 0 in probability as $n \to \infty$.
+		\end{enumerate}
+		
+		Which of these statements are always true? Write \texttt{True} or \texttt{False} in each of the boxes below.
+		\[
+		\fbox{\parbox[c][1.5cm][t]{4cm}{\textbf{A.} \hspace{0.5cm}}} \hspace{1cm} 
+		\fbox{\parbox[c][1.5cm][t]{4cm}{\textbf{B.} \hspace{0.5cm}}} \hspace{1cm} 
+		\fbox{\parbox[c][1.5cm][t]{4cm}{\textbf{C.} \hspace{0.5cm}}}
+		\]
+		
+		
+		\stepcounter{num} 
+		\paragraph{Exercise \thenum.}	
+			\textbf{Problem 21.4.} \\
+			In the fair Gambler's Ruin game with initial stake of $n$ dollars and target of $T$ dollars, let $e_n$ be the number of \$1 bets the gambler makes until the game ends (because he reaches his target or goes broke).
+			
+			\begin{enumerate}
+				\item Describe constants $a$, $b$, $c$ such that
+				\begin{equation}\label{eq:rec}
+					e_n = a e_{n-1} + b e_{n-2} + c 
+				\end{equation}
+				for $1 < n < T$.
+				 \vspace{7cm}
+				\item Let $e_n$ be defined by~\eqref{eq:rec} for all $n > 1$, where $e_0 = 0$ and $e_1 = d$ for some constant $d$. Derive a closed form (involving $d$) for the generating function $E(x) = \sum_{n=0}^{\infty} e_n x^n$.
+				
+				\item Find a closed form (involving $d$) for $e_n$.
+				
+				\vspace{5cm}
+				
+				\item Use part (c) to solve for $d$.
+				
+				\vspace{5cm}
+				\item Prove that $e_n = n(T - n)$.
+				
+				\vspace{5cm}
+			\end{enumerate}
+			
+		
+		
+		
+		
+	
+	\end{document}
