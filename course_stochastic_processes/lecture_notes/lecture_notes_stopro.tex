@@ -931,7 +931,7 @@ Let us denote it $T(n)$.
 Notice that $P(T(n)\leq t) = P(N(t)\geq n)$.
 Hence, 
 \begin{equation}
-	P(T(n)\leq t) = 1 - P(N(t)< n) = 1-\sum_{k = 1}^{n-1} \frac{(\lambda t)^k}{k!}e^{-\lambda t}
+	P(T(n)\leq t) = 1 - P(N(t)< n) = 1-\sum_{k = 0}^{n-1} \frac{(\lambda t)^k}{k!}e^{-\lambda t}
 	= \sum_{k = n}^\infty \frac{(\lambda t)^k}{k!}e^{-\lambda t}
 \end{equation}
 Moreover, the PDF is obtained by deriving the CDF, which yields
@@ -1189,13 +1189,54 @@ Consequently, with probability 1, $X(T + t) = \infty$, $t \geq 0$. This is an ex
 A non-explosive CTMC is one for which the number of
 transitions in any finite interval of time is finite.
 
-   \bibliographystyle{plain}
+  
+  \begin{itemize}
+  	\item Week 1: 
+  	\begin{itemize}
+  		\item Monday: RVs, distributions (indicator RV wasn't understood by all), conditional probas, inequalities (beginning)
+  		\item Thursday: Inequalities (you proved Markov without Indicator RV but using integrals for a continuous RV, same works with sums for discrete), limit theorems
+  	\end{itemize}
+  	\item Week 2: 
+  	\begin{itemize}
+  	\item Monday: Practice (hatching chicks, trees and proba multiplicaions wasn't understood by all, some people thought sequantial events are dependent - explain via cond probability, X+Y binomial (don't do trees, they're confusing, only do convolution, Salma and Oussama had a differen't way but didn't manage to get same result, you sent them the right proof using their way of thinking), Exercice 14 is solved using Chebychev inequality (all students used tables, but I sayno erf tables as they're not given))
+  	\item Thursday : Stochastic processes - Random walks
+  	\end{itemize}
+  	\item Week 3: 
+  	\begin{itemize}
+  	\item Monday: Random Walks (continuation)
+  	\item Thursday : Practice (RW): Ex2 (3 BCs?, the text says how to orient the x axis)
+  	\end{itemize}
+  	\item Week 4: 
+  	\begin{itemize}
+  	\item Monday: The Bernoulli process : Pascal PMF isn't easy for students to understand, give the table of input/output for binom/pascal, and the scheme of the observer for the binom arriving early (ahead of time) and the observer for Pascal being late and infering what happened before
+  	\item Thursday: The Bernoulli process (continuation), The Poisson process (approximation for delta small enough, proof that Binom tends towards Poisson) 
+  	\end{itemize}
+  	\item Week 5: Bootcamp (Monday/Thursday classes canceled)
+  	\begin{itemize}
+  	\item Friday: 2hours Bernoulli process practice : in ex1 memorylessness, students used $\geq$ instead of >, which is wrong for discrete RVS, only works for continuous RVs as both are the same) - Pascal exercise not easy to understand
+  	\end{itemize}
+  	\item Week 6: 
+  	\begin{itemize}
+  	\item Monday: The Poisson process : def of Poisson, taxi example, explain why x=2 and x=3 are equally likely (cuz Poisson is non-symmetric), draw gragh of $X_i, N(t), S_i$, inter-arrival times, memorylessness of expo (check why all later inter-arrivals are similar to 1st), arrival times (didn't finish)
+  	\item Thursday: 
+  	\end{itemize}
+  	\item Week 7: 
+  	\begin{itemize}
+  	\item Monday
+  	\item Thursday
+  	\end{itemize}
+  	
+  	
+  \end{itemize}
+  %CTMC section is from Columbia + nyu syllabi
+  
+  
+  \bibliographystyle{plain}
   \bibliography{bibli}
   
   http://www.stat.yale.edu/Courses/1997-98/101/ranvar.htm
   (Definitions taken from Valerie J. Easton and John H. McColl's Statistics Glossary v1.1) 
   
-  %CTMC section is from Columbia + nyu syllabi
   
   $file:///home/benaceur/Documents/course_stochastic_processes/markov_cermics.pdf$
   %john tsilsikis

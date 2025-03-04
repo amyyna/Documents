@@ -23,7 +23,7 @@
 \usepackage[a4paper,left=.8cm, right=.8cm,top=1.5cm,bottom=1.5cm]{geometry}
 \setlength{\columnsep}{1.2cm}
 
-\usepackage{cancel}
+%\usepackage{cancel}
 \usepackage{bm}
 \usepackage{amssymb,amsfonts}
 \usepackage{mathrsfs}
@@ -49,10 +49,10 @@
 \newcommand{\R}{\mathbb R}
 \newcommand{\bX}{\bar X}
 \newcommand{\Ktr}{\calK^{\rm tr}}
-\title{ \bfseries \Huge {Handout 3: Bernoulli and Poisson processes }}    
+\title{ \bfseries \Huge {Handout 4:  Poisson processes }}    
 \vspace{-4cm}        
 
-\date{Due date : February $24^{th}$}       
+\date{Due date : March $10^{th}$}       
 \vspace{-4cm}        
 \newcounter{num}  % Create a new counter for paragraphs
 \begin{document}
@@ -62,13 +62,6 @@
 	\thispagestyle{empty} 
 	\paragraph{Brief recap}
 	\begin{enumerate}
-			\item (Memorylessness) A distribution is said to be memoryless if a random variable $X$ from that distribution satisfies
-		$P(X \geq s + t \mid X \geq s) = P(X \geq t)$, for all $s, t > 0$.
-		\item  The PMF of interarrival times $Y_k$ in a Bernoulli process is given by:
-		\[
-		p_{Y_k}(t) = \binom{t-1}{k-1} p^k (1 - p)^{t-k}, \quad t = k, k+1, \dots,
-		\]
-		This is known as the Pascal PMF of order $k$.
 		\item A sequence of arrivals in continuous time is called a Poisson process with rate $\lambda$ if
 	\begin{enumerate}
 		\item The number of arrivals in disjoint time intervals are independent.
@@ -78,22 +71,67 @@
 		$
 	\end{enumerate}	
 	\item The number of arrivals $N_\tau$ over an interval of length $\tau$ in a Poisson process satisfies $E[N_\tau] = \lambda\tau$ and $ V[N_\tau] = \lambda\tau$.
-	\item (Merging) Let $\{N_1(t)\}_{t > 0}$ and $\{N_2(t)\}_{t > 0}$ be independent Poisson processes with rates $\lambda_1$ and $\lambda_2$, respectively. 
-	The merged process $\{N (t) = N_1(t) + N_2(t)\}_{t > 0}$ is a Poisson process with rate $\lambda_1+\lambda_2$.
-	\item (Splitting) Let $\{N_1(t)\}_{t > 0}$ be a Poisson process with rate
+	
+	\item The time \( T_1 \) until the first arrival in a Poisson process has an exponential distribution with parameter \( \lambda \), i.e. $f_{T_1}(t) = \lambda e^{-\lambda t}$ for  $t \geq 0$. Its expectation and variance are given by
+	\[
+	 E[T_1] = \frac{1}{\lambda}, \quad V[T_1] = \frac{1}{\lambda^2}.
+	\]
+	
+	\item The history of a Poisson process until a particular time $t$ is independent
+	from the future of the process.
+	Additionally, the portion of the Poisson process that starts at time $t$ inherits the
+	defining properties of the original process.
+	This is called the \textbf{fresh-start property}.
+	
+	\item The inter-arrival time in a Poisson process is memoryless. 
+	Its has an exponential distribution. 
+	The exponential distribution satisfies the \textbf{memoryless property}.
+	
+	\item The \( k \)-th arrival time in a Poisson process is equal to the sum of the first \( k \) inter-arrival times:
+	\[
+	Y_k = T_1 + T_2 + \cdots + T_k,\quad k\geq 1.
+	\]
+	The latter are independent exponential random variables with common parameter \( \lambda \). The mean and variance of \( Y_k \) are given by
+	\[
+	E[Y_k] = E[T_1] + \cdots + E[T_k] = \frac{k}{\lambda},
+	\]
+	\[
+	V(Y_k) = V(T_1) + \cdots + V(T_k) = \frac{k}{\lambda^2}.
+	\]
+	The PDF of \( Y_k \) is given by
+	\[
+	f_{Y_k}(y) = \frac{\lambda^k y^{k-1} e^{-\lambda y}}{(k-1)!}.
+	\]
+	It is known as the \textbf{Erlang PDF of order \( k \)}.
+	
+	\hspace{-1.1cm}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		\textbf{Property} & \textbf{Poisson} & \textbf{Bernoulli} \\
+		\hline
+		Arrival times & Continuous & Discrete \\
+		\hline
+		Arrival rate & \( \lambda \) per unit time & \( p \) per trial \\
+		\hline
+		PMF of \# of arrivals & Poisson & Binomial \\
+		\hline
+		Interarrival time CDF & Exponential & Geometric \\
+		\hline
+		CDF of arrival times & Erlang & Pascal \\
+		\hline
+	\end{tabular}
+	
+	\item (Merging) Let $\{N_1(t)\}_{t \geq 0}$ and $\{N_2(t)\}_{t \geq 0}$ be independent Poisson processes with rates $\lambda_1$ and $\lambda_2$, respectively. 
+	The merged process $\{N (t) = N_1(t) + N_2(t)\}_{t \geq 0}$ is a Poisson process with rate $\lambda_1+\lambda_2$.
+	
+	\item (Splitting) Let $\{N_1(t)\}_{t \geq 0}$ be a Poisson process with rate
 	$\lambda$, and classify each arrival in the process as a type-1 event with probability $p$ and a type-2 event with probability $1 - p$, independently. 
 	Then the type-1 events form a Poisson process with rate $\lambda p$, the type-2 events form a Poisson process with rate
 	$\lambda (1-p)$, and these two processes are independent.
 	\end{enumerate}
 
 
-
-
-	\paragraph{Exercise \thenum.}
-	$X$ is a random variable with memoryless distribution with CDF $F$ and PMF $p_i = P(X = i)$.
-	Find an expression for $P(X \geq j + k)$ in terms of $F(j)$, $F(k)$, $p_j$, $p_k$.
-	
-	\stepcounter{num} 
+ 
 	\paragraph{Exercise \thenum.}
 	Let $N_t$ be the number of arrivals up until time $t$ in a Poisson process of rate $\lambda$, and let $T_n$ be the time of the $n$-th arrival. Consider statements of the form
 	\[
@@ -101,50 +139,23 @@
 	\]\\
 	where $\gtrless_1$ and $\gtrless_2$ are replaced by symbols from the list $<, \leq, \geq, >$. Which of these statements are true?
 	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+	You enter the newRest and line up for checkout at one of the 2 payment stations while the other one is busy with another person.
+	\begin{enumerate}
+		\item Assume that the checkout times for you and for the other person being served are i.i.d. exponential random variables. What is the probability that you will be the last to leave?
+		\item Assume that the checkout times for you and for the other person being served are exponential random variables with rates $\lambda_1$ and $\lambda_2$ respectively. 
+		What is the probability that you will be the last to leave?
+	\end{enumerate}
 	
 	\stepcounter{num} 
 	\paragraph{Exercise \thenum.}
-	Passengers arrive at a bus stop according to a Poisson process with rate $\lambda$. The arrivals of buses are exactly $t$ minutes apart. 
+	Passengers arrive at Benguerir train station according to a Poisson process with rate $\lambda$. The arrivals of trains are exactly $t$ minutes apart. 
 	\begin{enumerate}
 		\item 
 	Show that on average, the sum of the waiting times of the riders on one of the buses is $\frac 1 2 \lambda t^2$.
 	\end{enumerate}
 	
-	
-	\stepcounter{num} 
-	\paragraph{Exercise \thenum.}
-	Suppose we have a couple of Poisson processes with rates $\lambda_1, \lambda_2$ respectively. 
-	For an interval of length $ \delta$ small enough, give an approximation of $P((k_1,k_2);\delta)$ for $k_1,k_2\in\{1,2\}$.
-	A student receives phone calls according to a Poisson process with rate $ \lambda$. 
-	Unfortunately she has lost her cell phone charger. 
-	The battery's remaining life is a random variable $T$ with mean $\mu$ and variance $\sigma^2$. Let $N(T)$ be the number of phone calls she receives before the battery dies.
-	\begin{enumerate}
-		\item Find $ {\rm E}[N(T)]$ and ${\rm V}[N(T)]$.
-	\end{enumerate}
-	
-	
-	
-	\stepcounter{num} 
-	\paragraph{Exercise \thenum.}
-	Emails arrive in your inbox according to a Poisson process with rate $\lambda$, measured in emails per hour.
-	Each email is studies-related with probability $p$ and personal with probability $1 - p$. 
-	The amount of time it takes to answer a studies-related email is a random variable with mean $\mu_W$ and variance $\sigma_W^2$. 
-	The amount of time it takes to answer a personal email has mean $\mu_P$ and variance $\sigma_P^2$.
-	The response times for different emails are independent.
-	
-	What is the average amount of time you have to spend answering all the emails that arrive in a $t$-hour interval? What about the variance?
-	
-	
-	
-	\stepcounter{num} 
-	\paragraph{Exercise \thenum.}
-On a whatsApp question-and-answer group, $N \sim {\rm Pois}(\lambda_1)$ questions will be posted tomorrow, with $\lambda_1$ measured in questions/day. Given $N$ , the post times are i.i.d. and
-uniformly distributed over the day (a day begins and ends at midnight). 
-When a question is posted, it takes an ${\rm Exp}(\lambda_2)$ amount of time (in days) for an answer to be posted,
-independently of what happens with other questions.
-\begin{enumerate}
-	\item Find the probability that a question posted at a uniformly random time tomorrow will not yet have been answered by the end of that day.
-\end{enumerate}
 	
 	
 	\stepcounter{num} 
@@ -163,9 +174,110 @@ independently of what happens with other questions.
 	
 	\stepcounter{num} 
 	\paragraph{Exercise \thenum.}
+	Suppose we have a couple of Poisson processes with rates $\lambda_1, \lambda_2$ respectively. 
+	For an interval of length $ \delta$ small enough, give an approximation of $P((k_1,k_2);\delta)$ for $k_1,k_2\in\{1,2\}$.
+	
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+	Let $X$, $Y$, and $Z$ be independent exponential random variables with parameters $\lambda, \mu$ and $\nu$,
+	respectively. Find $P(X < Y < Z)$.
+	
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+	Type A, B, and C items are placed in a common buffer, each type arriving as part of an independent Poisson process with average arrival rates, respectively, of $ a $, $ b $, and $ c $ items per minute. For the first four parts of this problem, assume the buffer is discharged immediately whenever it contains a total of ten items.
+	
+	\begin{enumerate}
+		\item What is the probability that, of the first ten items to arrive at the buffer, only the first and one other are type A?
+		\item What is the probability that any particular discharge of the buffer contains five times as many type A items as type B items?
+		\item Determine the PDF, expectation, and variance for the total time between consecutive discharges of the buffer.
+		\item Determine the probability that exactly two of each of the three item types arrive at the buffer input during any particular five minute interval.
+	\end{enumerate}
+	
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+	You receive whatsApp messages according to a Poisson process with rate $ \lambda$. 
+	Unfortunately, you figured that you lost your cell phone charger late and you do not want to inconvenience flatmates who are already asleep.
+	The battery's remaining life is a random variable $T$ with mean $\mu$ and variance $\sigma^2$. 
+	Let $N(T)$ be the number of whatsApp messages you receive before the battery dies.
+	\begin{enumerate}
+		\item Find $ E[N(T)]$.
+		\item Find $V[N(T)]$.
+	\end{enumerate}
+	
+	
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+	Emails arrive in your inbox according to a Poisson process with rate $\lambda$, measured in emails per hour.
+	Each email is studies-related with probability $p$ and personal with probability $1 - p$. 
+	The amount of time it takes to answer a studies-related email is a random variable with mean $\mu_W$ and variance $\sigma_W^2$. 
+	The amount of time it takes to answer a personal email has mean $\mu_P$ and variance $\sigma_P^2$.
+	The response times for different emails are independent.
+	\begin{enumerate}
+	\item What is the average amount of time you have to spend answering all the emails that arrive in a $t$-hour interval? 
+	\item What about the variance?
+		\end{enumerate}
+	
+	
+	
+	
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+	Beginning at time $ t = 0 $, we begin using bulbs, one at a time, to illuminate a room. Bulbs are replaced immediately upon failure. Each new bulb is selected independently by an equally likely choice between a type-A bulb and a type-B bulb. The lifetime, $ X $, of any particular bulb of a particular type is a random variable, independent of everything else, with the following PDF:
+	
+	For type-A bulbs:
+	\[
+	f_X(x) = 
+	\begin{cases}
+		e^{-x}, & x \geq 0 \\
+		0, & \text{otherwise}
+	\end{cases}
+	\]
+	
+	For type-B bulbs:
+	\[
+	f_X(x) = 
+	\begin{cases}
+		3e^{-3x}, & x \geq 0 \\
+		0, & \text{otherwise}
+	\end{cases}
+	\]
+	
+	\begin{enumerate}
+		\item Find the expected time until the first failure.
+		\item Find the probability that there are no bulb failures before time $ t $.
+		\item Given that there are no failures until time $ t $, determine the conditional probability that the first bulb used is a type-A bulb.
+		\item Determine the probability that the total period of illumination provided by the first two type-B bulbs is longer than that provided by the first type-A bulb.
+		\item Suppose the process terminates as soon as a total of exactly 12 bulb failures have occurred. Determine the expected value and variance of the total period of illumination provided by type-B bulbs while the process is in operation.
+		\item Given that there are no failures until time $ t $, find the expected value of the time until the first failure.
+	\end{enumerate}
+	
+	
+	
+	
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
+On a whatsApp question-and-answer group, $N \sim {\rm Pois}(\lambda_1)$ questions will be posted tomorrow, with $\lambda_1$ measured in questions/day. 
+Given $N$ , the post times are i.i.d. and uniformly distributed over the day (a day begins and ends at midnight). 
+When a question is posted, it takes an ${\rm Exp}(\lambda_2)$ amount of time (in days) for an answer to be posted,
+independently of what happens with other questions.
+\begin{enumerate}
+	\item Find the probability that a question posted at a uniformly random time tomorrow will not yet have been answered by the end of that day.
+\end{enumerate}
+	
+	
+	
+	
+	\iffalse
+	\stepcounter{num} 
+	\paragraph{Exercise \thenum.}
 	Bees in a forest are distributed according to a 3D Poisson process with rate $\lambda$. 
 	What is the distribution of the distance from a hiker to the nearest bee?
-	
+	\fi
 	
 
 \stepcounter{num} 
@@ -177,14 +289,62 @@ independently of what happens with other questions.
 		Assume $t$ is large enough that $t > \frac{b}{V_i}$ for all possible values of $V_i$. Show that $Z_t$ has a Poisson distribution with mean $\lambda(b - a) \mathbb{E}(V_i^{-1})$.
 		
 	
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}
+		A service station handles jobs of two types, A and B. (Multiple jobs can be processed simultaneously.) Arrivals of the two job types are independent Poisson processes with parameters $\lambda_A = 3$ and $\lambda_B = 4$ per minute, respectively. Type A jobs stay in the service station for exactly one minute. Each type B job stays in the service station for a random but integer amount of time which is geometrically distributed, with mean equal to $2$, and independent of everything else. The service station started operating at some time in the remote past.
+		
+		\begin{enumerate}
+			\item What is the mean, variance, and PMF of the total number of jobs that arrive within a given three-minute interval?
+			\item We are told that during a $10$-minute interval, exactly $10$ new jobs arrived. What is the probability that exactly $3$ of them are of type A?
+			\item At time 0, no job is present in the service station. What is the PMF of the number of type B jobs that arrive in the future, but before the first type A arrival?
+		\end{enumerate}
+		
+
+		\stepcounter{num} 
+		\paragraph{Exercise \thenum.}		
+		The interarrival times for cars passing a checkpoint are independent random variables with PDF
+		$$
+		f_T(t) = 
+		\begin{cases} 
+			2e^{-2t}, & \text{for } t > 0 \\
+			0, & \text{otherwise.}
+		\end{cases}
+		$$
+		where the interarrival times are measured in minutes. The successive experimental values of the durations of these interarrival times are recorded on small computer cards. The recording operation occupies a negligible time period following each arrival. Each card has space for three entries. As soon as a card is filled, it is replaced by the next card.
+		
+		\begin{enumerate}
+			\item Determine the mean and the third moment of the interarrival times.
+			\item Given that no car has arrived in the last four minutes, determine the PMF for random variable $ K $, the number of cars to arrive in the next six minutes.
+			\item Determine the PDF and the expected value for the total time required to use up the first dozen computer cards.
+			\item Consider the following two experiments:
+			\begin{enumerate}
+				\item Pick a card at random from a group of completed cards and note the total time, $ Y $, the card was in service. Find $ E[Y] $ and $ \text{var}(Y) $.
+				\item Come to the corner at a random time. When the card in use at the time of your arrival is completed, note the total time it was in service (the time from the start of its service to its completion). Call this time $ W $. Determine $ E[W] $ and $ \text{var}(W) $.
+			\end{enumerate}
+		\end{enumerate}
+		
+	
+	
+
+		
+		\stepcounter{num} 
+		\paragraph{Exercise \thenum.}
+		 A store opens at $ t = 0 $ and potential customers arrive in a Poisson manner at an average arrival rate of $ \lambda $ potential customers per hour. As long as the store is open, and independently of all other events, each particular potential customer becomes an actual customer with probability $ p $. The store closes as soon as ten actual customers have arrived.
+		
+		\begin{enumerate}
+			\item What is the probability that exactly three of the first five potential customers become actual customers?
+			\item What is the probability that the fifth potential customer to arrive becomes the third actual customer?
+			\item What is the PDF and expected value for $ L $, the duration of the interval from store opening to store closing?
+			\item Given only that exactly three of the first five potential customers became actual customers, what is the conditional expected value of the total time the store is open?
+			\item Considering only customers arriving between $ t = 0 $ and the closing of the store, what is the probability that no two actual customers arrive within $ \tau $ time units of each other?
+		\end{enumerate}
+		
+		
 	\stepcounter{num} 
 	\paragraph{Exercise \thenum.}
-	Two students are independently performing independent Bernoulli trials. 
-	For concreteness, assume that student A is flipping a 1dH coin with probability $p_1$ of Heads and student B is flipping a 5dhs coin with probability $p_2$ of Heads. 
-	Let $X_1, X_2, \dots$ be student A's results and $Y_1, Y_2, \dots$ be student B's results, with $X_i \sim \text{Bern}(p_1)$ and $Y_j \sim \text{Bern}(p_2)$.
+	Consider a Poisson process with parameter $ \lambda $, and an independent random variable $ T $, which is exponential with parameter $ \nu $. Find the PMF of the number of Poisson arrivals during the time interval $ [0, T] $.
+
+		
 	
-	Find the distribution and expected value of the first time at which they are simultaneously successful, i.e., the smallest $n$ such that $X_n = Y_n = 1$.
-	
-	
-	\paragraph{References and acknowledgments:} Introduction to probability (J. Blitzstein and J. Huang) - Introduction to probability (D. Bertsekas and J.  Tsitsiklis).
+	\paragraph{References and acknowledgments:} Introduction to probability (J. Blitzstein and J. Huang) - Introduction to probability (D. Bertsekas and J.  Tsitsiklis) - J.  Tsitsiklis.
 \end{document}

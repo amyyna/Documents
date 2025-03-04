@@ -112,16 +112,14 @@ $$ $$
 
 \stepcounter{num} 
 \paragraph{Exercise \thenum.}
-Suppose that, at the CC entrance, a taxi arrives every 5 minnutes, and the	probability that an arriving taxi is available (i.e. hasn't been specifically ordered by someone) is \( \frac{1}{5} \).
+Suppose that, at the CC entrance, a taxi arrives every 5 minutes, and the	probability that an arriving taxi is available (i.e. hasn't been specifically ordered by someone) is \( \frac{1}{5} \).
 	
 	\begin{enumerate}
 		\item Suppose you have just arrived at the entrance and are waiting for an available taxi. When you arrive, you just miss an available taxi. 
 		What is the probability that you will have to wait at least 15 minutes (3 taxi arrivals) for an available taxi?
 		
-		\item Suppose you have just arrived at the entrance and are waiting for an available taxi. When you arrive, you just miss an available taxi. 
-		What is the probability that you will have to wait at least 15 minutes (3 taxi arrivals) for an available taxi?
 		
-		\item Suppose you are at the entrance, and 10 taxis have arrived and left, and none of them was available. What is the probability that you will have to wait at least 16 minutes (3 taxi arrivals) for the next available taxi?
+		\item Suppose you are at the entrance, and 10 taxis have arrived and left, and none of them was available. What is the probability that you will have to wait at least 15 minutes (3 taxi arrivals) for the next available taxi?
 	\end{enumerate}
 	
 	
@@ -168,6 +166,27 @@ Find \( E[N] \), where \( N \) is the number of trials in your experiment.
 \stepcounter{num} 
 \paragraph{Exercise \thenum.}
 Suppose there are \( n \) papers in a drawer. You draw a paper and sign it, and then, instead of filing it away, you place the paper back into the drawer. If any paper is equally likely to be drawn each time, independent of all other draws, what is the expected number of papers that you will draw before signing all \( n \) papers? You may leave your answer in the form of a summation.
+
+
+
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}
+Let L17 be described by a Pascal PMF of order 17. Find the numerical values of $a$ and $b$ in
+the following equation. Explain your work.
+$$
+\sum_{i=42}^\infty p_{L_{17}}(i) = \sum_{x=0}^a \binom b x p^x (1-p)^{b-x}
+$$
+
+
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}
+Two students are independently performing independent Bernoulli trials. 
+For concreteness, assume that student A is flipping a 1dH coin with probability $p_1$ of Heads and student B is flipping a 5dhs coin with probability $p_2$ of Heads. 
+Let $X_1, X_2, \dots$ be student A's results and $Y_1, Y_2, \dots$ be student B's results, with $X_i \sim \text{Bern}(p_1)$ and $Y_j \sim \text{Bern}(p_2)$.
+
+Find the distribution and expected value of the first time at which they are simultaneously successful, i.e., the smallest $n$ such that $X_n = Y_n = 1$.
+
+
 
 
 \paragraph{References and acknowledgments:} Introduction to probability (J. Blitzstein and J. Huang) - Introduction to probability (D. Bertsekas and J.  Tsitsiklis).
