@@ -1,0 +1,18 @@
+\babel@toc {english}{}\relax 
+\beamer@subsectionintoc {0}{1}{Industrial context}{2}{0}{0}
+\beamer@subsectionintoc {0}{2}{Variational inequalities with linear constraints}{3}{0}{0}
+\beamer@sectionintoc {1}{Elastic contact problem}{5}{0}{1}
+\beamer@subsectionintoc {1}{1}{Elastic equation}{5}{0}{1}
+\beamer@subsectionintoc {1}{2}{Non-interpenetration condition}{6}{0}{1}
+\beamer@sectionintoc {2}{Abstract model problem}{9}{0}{2}
+\beamer@subsectionintoc {2}{1}{Abstract model problem}{9}{0}{2}
+\beamer@subsectionintoc {2}{2}{Lagrangian formulation}{10}{0}{2}
+\beamer@subsectionintoc {2}{3}{Discrete FEM formulation}{11}{0}{2}
+\beamer@sectionintoc {3}{The reduced-basis model}{14}{0}{3}
+\beamer@subsectionintoc {3}{1}{Reference configuration}{14}{0}{3}
+\beamer@subsectionintoc {3}{2}{Reduced basis spaces}{16}{0}{3}
+\beamer@subsectionintoc {3}{3}{Reduced problem}{18}{0}{3}
+\beamer@subsectionintoc {3}{4}{Offline/online separation}{20}{0}{3}
+\beamer@subsectionintoc {3}{5}{Basis constructions}{24}{0}{3}
+\beamer@sectionintoc {4}{Numerical results}{34}{0}{4}
+\beamer@subsectionintoc {4}{1}{Ring on block}{34}{0}{4}
