@@ -1,0 +1,315 @@
+\documentclass[article,12pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc} 
+\usepackage[english]{babel} 
+
+%\pagestyle{empty} 
+\usepackage{longtable}
+
+\usepackage{amsmath, amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{proof*}{Proof}
+\newtheorem{definition}{Definition}
+
+\newtheorem{exercise}{Exercise}
+\newtheorem{question}{Question}
+
+\newtheorem{example}{Example}
+
+\newtheorem{remark}{Remark}
+
+\usepackage[a4paper,left=1.5cm, right=1.5cm,top=1.5cm,bottom=1.5cm]{geometry}
+\setlength{\columnsep}{1.2cm}
+
+%\usepackage{cancel}
+\usepackage{bm}
+\usepackage{amssymb,amsfonts}
+\usepackage{mathrsfs}
+\usepackage{color}
+%\usepackage{hyperref}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{algorithmicx}
+\usepackage[ruled]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{marginnote}
+\newcommand{\Ptr}{\mathcal P^{\rm tr}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\N}{\mathbb N}
+\newcommand{\calN}{\mathcal N}
+\newcommand{\bP}{\bold P}
+\newcommand{\calK}{\mathcal K}
+\newcommand{\calF}{\mathcal F}
+\newcommand{\calH}{\mathcal H}
+\newcommand{\calP}{\mathcal P}
+\newcommand{\calC}{\mathcal C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\bX}{\bar X}
+\newcommand{\Ktr}{\calK^{\rm tr}}
+\title{ \bfseries \Huge {Mid-term exam : stochastic processes}}    
+\vspace{-4cm}        
+
+\date{March $26^{th}$, 2025}       
+\vspace{-4cm}        
+\newcounter{num}  % Create a new counter for paragraphs
+\begin{document}
+	
+	\setcounter{num}{1}  % Start the paragraph counter at 1
+		
+		\paragraph{Problem \thenum.}
+		\begin{enumerate}
+			\item Show that if the transition matrix of a discrete-time discrete-state Markov chain is symmetric, then the stationary distribution is
+			uniform over all states.
+			\item
+		\end{enumerate}
+		
+		Which of these statements are always true? Write \texttt{True} or \texttt{False} in each of the boxes below.
+		\[
+		\fbox{\parbox[c][1.5cm][t]{4cm}{\textbf{A.} \hspace{0.5cm}}} \hspace{1cm} 
+		\fbox{\parbox[c][1.5cm][t]{4cm}{\textbf{B.} \hspace{0.5cm}}} \hspace{1cm} 
+		\fbox{\parbox[c][1.5cm][t]{4cm}{\textbf{C.} \hspace{0.5cm}}}
+		\]
+		
+		\begin{enumerate}
+			\item \textit{[3 points]} Whether \texttt{True} or \texttt{False}, justify your answer to question (B).
+		\end{enumerate}
+		
+		
+		\newpage
+		
+		\stepcounter{num} 
+		\paragraph{Problem \thenum.}
+		In this problem set, we study the case of a CC-CI1 student (student A) who hadn't started working for this exam early enough to be able to go through all the exercises in the handouts (hopefully not your case!).
+		Student A comes up with a strategy to study for the mid-term. 
+		He takes the 4 handouts in their chronological order and flips a coin for each exercise. 
+		If the coin lands heads, student A studies the exercise. 
+		If it lands tails, he doesn't study the exercise and moves on, repeating the strategy for each new exercise.
+		The coin has probability $p>0$ of landing heads.
+		\begin{enumerate}
+			\item \textit{[5 points]} Student A gets into classroom 105 early for the mid-term. 
+			He tells his classmate that he studied $m$ exercises.
+			Let $X$ be the number of coin flips it took student A to study the $m$ exercises. Give the probability distribution of $X$. 
+			
+			\vspace{5cm}
+			
+			\item \textit{[6 points]} Let $m_1$ and $m_2$ be two integers such that $0<m_1\leq m_2$ and let $N_1$ and $N_2$ be the number of exercises done by rounds $m_1$ and $m_2$ respectively. Prove that the conditional probability distribution of $N_1 \mid N_2$ is given by
+			\begin{equation}
+				P(N_1=k_1 \mid N_2=k_2) = \frac{\binom{m_1}{k_1}\binom{m_2-m_1}{k_2-k_1}}{\binom{m_2}{k_2}}.
+			\end{equation} 
+			
+			
+		\end{enumerate}
+		
+		%\newpage
+		%\textcolor{white}{nada}
+		
+		\newpage
+		
+		Two other CC-CI1 students (student B and student C) heard of student A's strategy and decided to improve it through cooperation with a 2-step strategy.
+		\begin{itemize}
+			\item Step 1: For a given time, student B works on the exercises of handouts 1 and 3, and student C works of the exercises of handouts 2 and 4;
+			\item Step 2: They explain to each other the exercises they worked on, thereby saving some time. 
+		\end{itemize}
+		During step 1, the two students use two independent coins that both have probability $p>0$ of landing heads.
+		Each student takes a coin and runs the same strategy as student A above.
+		
+		At the end of step 1, student B has flipped the coin $n_1$ times and student C has flipped the coin $n_2$ times.
+		\begin{enumerate}
+			\item [3.]\textit{[4 points]} Let $Y_B$ be the number of exercises student B worked on.
+			Give the probability distribution of $Y_B$.
+			
+			\vspace{6cm}
+			
+			\item [4.]\textit{[5 points]} Let $Z$ be the total number (i.e. the sum) of exercises both students B and C worked on. Give the probability distribution of $Z$.
+			
+			
+			
+			%\item Consider the simple case where $p=1/2$, 
+		\end{enumerate}
+		
+		\newpage
+		
+		Suppose all students in the class applied student A's strategy. The number of exercises $W$ that each student ends up studying has mean $\mu>0$ and standard deviation $\sigma>0$.
+		\begin{enumerate}
+		\item [5.]\textit{[5 points]} Give an expression of a nontrivial upper bound on the probability that the number of exercises you studied is 2 standard deviations away from the mean.
+		Justify your answer.
+		
+		
+		%\vspace{5cm}
+		\end{enumerate}
+		\newpage
+		\stepcounter{num} 
+		\paragraph{Problem \thenum.}
+		Imagine that this exam was entirely a multiple-choice exam as in questions A, B, C of Problem 1. 
+		You may assume that the number of questions is infinite. 
+		\textit{Simultaneously, but independently}, your conscious and subconscious faculties are generating answers for you, each in a Poisson manner. 
+		(Your conscious and subconscious are always working on different questions.) Conscious responses are generated at the rate \( \lambda_c >0\) responses per minute. Subconscious responses are generated at the rate \( \lambda_s>0 \) responses per minute. Assume \( \lambda_c \neq \lambda_s \). 
+		Each conscious response is an independent Bernoulli trial with probability \( p_c>0 \) of being correct. 
+		Similarly, each subconscious response is an independent Bernoulli trial with probability \( p_s>0 \) of being correct. You respond only once to each question, and you can assume that your time for recording these conscious and subconscious responses is negligible.
+		
+		\begin{enumerate}
+			\item \textit{[5 points]} Determine the probability distribution of the number of conscious responses you make in an interval of \( T \) minutes.
+			
+			\vspace{6cm}
+			
+			\item \textit{[5 points]} If we pick any question to which you have responded, what is the probability that your answer to that question represents a \textbf{subconscious} correct response?
+				
+				\vspace{14cm}
+				
+			
+			\item \textit{[5 points]} Knowing that you have answered 10 questions from the beginning of the exam to time $t_1>0$. What is the probability that, in the interval $]t_1,t_1+T]$, you will make exactly \( r \) conscious responses and \( s \) subconscious responses?
+			
+			\vspace{12cm}
+			
+			
+			\item \textit{[5 points]} Determine the probability distribution of random variable \( X \), where \( X \) is the time from the start of the exam until you make 3 responses (conscious or subconscious).
+			
+			\vspace{12cm}
+			
+			
+			
+			%\item Determine the probability density function for random variable \( Y \), where \( Y \) is the time from the start of the exam until you make your first conscious response which is preceded by at least one subconscious response.
+			
+			%\vspace{5cm}
+			
+			%\item \textit{[4 points]} 
+			%The questions are numbered in increasing order starting from 1. What is the distribution of the order of the question at which your will make your first wrong answer. 
+			
+		\end{enumerate}
+	
+	
+	\newpage
+	
+	\stepcounter{num} 
+	\paragraph{Problem \thenum.}	
+	You'd like to play a game after this exam. In preparation, you first want to run a probabilistic analysis of the game. 
+	After the professor collects the exam booklets, you are allowed to leave classroom 105. 
+	You decide the following :
+	\begin{itemize}
+		\item To move one step towards either the front door or the back door with equal probability.
+		\item Your movements are on a vertical straight line. 
+		If you reach the same horizontal level as the front door, you leave from the front door, and if you reach the same horizontal level as the back door, you leave from the back door.
+	\end{itemize}  
+	The back door is at $x=0$ and the front door is at $x=T$, $T\in \mathbb N^*$.
+	Your desk is at $x=n$, with $n\in\{0,1,\ldots,T\}$.
+	Let $p_n$ be the probability that you leave from the front door given that your desk is initially at $x=n$.
+	
+	
+	\begin{enumerate}
+		\item \textit{[5 points]} Write a \textit{solvable} recurrence on $p_n$.
+		
+		\vspace{7cm}
+		
+		
+		\item \textit{[5 points]} What is the probability of leaving from the front door? A proof is required.
+		
+		
+		\newpage
+		
+		\item \textit{[3 points]} What is the probability of leaving from the back door? A proof is required.
+		
+		\vspace{14cm}
+		
+		
+		\item \textit{[3 points]} What is the probability of remaining in classroom 105 forever? A proof is required.
+		
+		
+	\end{enumerate}
+	\newpage
+	
+	If your chosen desk is at position $n$, let $s_n$ be \textit{the number of steps you make} until this game ends (because you reach either the front door or the back door).
+	\begin{enumerate}
+		\item[5.] \textit{[5 points]} Give constants $a$, $b$, $c$ such that
+		\begin{equation}\label{eq:rec}
+			s_n = a s_{n-1} + b s_{n-2} + c 
+		\end{equation}
+		for $1 < n < T$.
+	\end{enumerate}
+	
+	\newpage
+	
+	
+	%\textcolor{white}{nada}
+	
+	%\newpage
+	
+	\maketitle
+	
+	\begin{center}
+		\huge{	DO NOT TURN THIS PAGE OVER UNTIL YOU ARE ALLOWED TO DO SO}
+	\end{center}
+	
+	\thispagestyle{empty} 
+	\bigskip
+	
+	%\paragraph{General guidance :}
+	\begin{enumerate}
+		\item This is a closed book exam. \textbf{One A4 page with notes in
+			your own handwriting} is allowed.
+			\item \textbf{DO NOT} write you name elsewhere other than at the bottom of this page.
+		\item Cheating is a \textbf{non-negotiable breach} that will lead to severe penalties.	
+		%\item You may assume all of the results presented in class unless explicitly asked for proof.
+		\item Write your solutions in the space provided. If you need more space, write on the last page of the problem. Please keep your entire answer to a problem on that problem's pages.
+		\item \textbf{Show your work}. Even if your final answer is wrong, you could earn partial credit if the reasoning is correct. 
+		Besides, correct final answers with partially erroneous reasoning won't get full credit.
+		\item Be neat and write legibly. You may be graded not only on the correctness of your answers, but also on the clarity and the correctness of your reasoning.
+		\item If you get stuck on a problem, move on to others. 
+		Problems are not in order of difficulty.
+		You'll figure out what order they're in once you're done.
+		\item When asked to give a probability distribution, \textbf{make sure to specify the range over which the formula holds}.
+		%\item Please resist the urge to roll on the floor laughing out loud.
+		\item You have \textbf{two hours} to complete the exam.
+	\end{enumerate}
+	
+	\bigskip
+	\begin{center}
+	\renewcommand{\arraystretch}{2.5} 
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		\textbf{Attribute} & \textbf{Problem 1} & \textbf{Problem 2} & \textbf{Problem 3} & \textbf{Problem 4}  & \textbf{\quad Total\quad}  \\
+		\hline
+		\textbf{Questions} & 4 & 5 & 4 & 5 & 18   \\
+		\hline
+		\textbf{Points} & 9 & 25 & 20 & 21 & 75   \\
+		\hline
+		\textbf{Score} & & & & &  \\
+		\hline
+	\end{tabular}
+	
+\end{center}
+	
+	\bigskip
+	
+	\bigskip
+	
+	\bigskip
+	
+	\begin{center}
+		\Large{\textbf{Full name : }} $\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots$
+	\end{center}
+	
+	
+		
+	\iffalse
+	\stepcounter{num} 
+	\paragraph{Problem \thenum.}
+	Each time a baseball player bats, he hits the ball with some probability. 
+	The table below gives the hit probability and number of chances to bat next season for five players.
+	Due to psychological effects of the game, hits do not happen mutually independently. 
+	
+	player prob. of hit number of chances to bat
+	Player A 1/3 300
+	Player B 1/4 200
+	Player C 1/4 400
+	Player D 1/5 250
+	Player E 2/5 500
+	
+	\begin{enumerate}
+		\item Let X be the total number times these five players hit the ball next season. Calculate $E[X]$?	
+	\end{enumerate}
+	\fi
+	
+	
+	\end{document}
