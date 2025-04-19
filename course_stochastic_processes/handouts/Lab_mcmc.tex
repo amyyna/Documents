@@ -1,0 +1,59 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\usepackage[a4paper,left=1cm, right=1cm,top=1.5cm,bottom=1.5cm]{geometry}
+\title{\bfseries \Huge Lab session: Markov Chain Monte Carlo}
+\author{}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Learning Objectives}
+	By the end of this lab, you should be able to :
+	\begin{itemize}
+		\item Understand the relevance of Markov chains in sampling.
+		\item Implement the Metropolis-Hastings algorithm in Python.
+		\item Analyze and interpret the behavior of MCMC samplers.
+		\item Apply the algorithm to both continuous and discrete probability distributions.
+	\end{itemize}
+	
+	\section*{Part 1: Conceptual Questions}
+	
+	\begin{enumerate}[label=\textbf{Q\arabic*.}]
+		\item Define a Markov chain and explain what is meant by the stationary distribution.
+		
+		\item Why do we use MCMC methods in Bayesian inference? What problems do they help to solve?
+		
+		\item Describe each step of the Metropolis-Hastings algorithm. What role does the proposal distribution play?
+		
+		\item What could happen if the proposal distribution’s variance is too large or too small?
+		
+		\item How would you evaluate if your Markov chain has converged?
+		
+		\item For the Gaussian example:
+		\begin{itemize}
+			\item Plot the histogram of samples and overlay the target PDF.
+			\item What does the trace plot reveal about the sampler?
+			\item How does changing the proposal standard deviation affect the sampling?
+		\end{itemize}
+		
+		\item For the Zipf distribution:
+		\begin{itemize}
+			\item Compare the sampled histogram with the true PMF.
+			\item What difficulties arise when sampling from heavy-tailed or discrete distributions?
+		\end{itemize}
+	\end{enumerate}
+	
+	\section*{Extension Questions (Optional)}
+	
+	\begin{enumerate}[label=\textbf{E\arabic*.}]
+		\item Modify the sampler to work on a 2D target distribution (e.g., a bivariate Gaussian). What changes are necessary?
+		\item Implement a different discrete proposal strategy for the Zipf sampler (e.g., geometric steps).
+		\item Compare acceptance rates across different samplers. What rate seems to balance convergence and exploration?
+	\end{enumerate}
+	
+\end{document}
