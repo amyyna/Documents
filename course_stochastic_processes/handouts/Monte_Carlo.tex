@@ -1,0 +1,199 @@
+\documentclass[twocolumn,12pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc} 
+\usepackage[francais, english]{babel} 
+\usepackage{amsmath, amsthm, enumitem}
+\usepackage{xcolor}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning}
+
+%\usepackage{multicol} (Stationary distribution)
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{proof*}{Proof}
+\newtheorem{definition}{Definition}
+\usepackage{graphicx}
+
+\newtheorem{exercise}{Exercise}
+\newtheorem{question}{Question}
+
+\newtheorem{example}{Example}
+
+\newtheorem{remark}{Remark}
+
+\usepackage[a4paper,left=.6cm, right=.6cm,top=.7cm,bottom=1.4cm]{geometry}
+\usepackage{cancel}
+\usepackage{bm}
+\usepackage{amssymb,amsfonts}
+\usepackage{mathrsfs}
+\usepackage{color}
+%\usepackage{hyperref}
+\usepackage{dsfont}
+\usepackage{algorithmicx}
+\usepackage[ruled]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{marginnote}
+\newcommand{\Ptr}{\mathcal P^{\rm tr}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\N}{\mathbb N}
+\newcommand{\calN}{\mathcal N}
+\newcommand{\bP}{\bold P}
+\newcommand{\calK}{\mathcal K}
+\newcommand{\calF}{\mathcal F}
+\newcommand{\calH}{\mathcal H}
+\newcommand{\calS}{\mathcal S}
+
+\newcommand{\bQ}{\bold Q}
+\newcommand{\bA}{\bold A}
+\newcommand{\bD}{\bold D}
+\newcommand{\bI}{\bold I}
+\newcommand{\bG}{\bold G}
+\newcommand{\bs}{\bold s}
+\newcommand{\calP}{\mathcal P}
+\newcommand{\calC}{\mathcal C}
+\newcommand\red[1]{\textcolor{red} {#1} }
+\newcommand{\R}{\mathbb R}
+\newcommand{\bX}{\bar X}
+\newcommand{\Ktr}{\calK^{\rm tr}}
+\title{ \bfseries \Huge {Handout 8: Monte Carlo simulation}} 
+\date{\vspace{-2ex}Due date : May $12^{th}, 2025$}%\vspace{-1ex}}       
+\vspace{-1cm}        
+\newcounter{num}  % Create a new counter for paragraphs
+
+\setcounter{num}{1}  % Start the paragraph counter at 1
+\begin{document}
+\maketitle
+
+\thispagestyle{empty} 
+\paragraph{Recap :}
+\begin{enumerate}
+	\item 	A simulation approach where we generate random samples to approximate a quantity of interest is called a
+	\textbf{Monte Carlo simulation}.
+	
+	\item For example, Monte Carlo simulation can be used to approximate mathematical or physical constants like $\pi$.
+	
+	\item Monte Carlo simulation can be used to minimize randomness in clustering results that arises due to different initialization of the random seed.
+	
+	\item 
+	\textbf{Theorem(Universality of the Uniform).} 
+	Let $F$ be a CDF which is \textbf{continuous} and \textbf{strictly increasing}.
+	The inverse $F^{-1}:[0, 1]\rightarrow\mathbb{R}$ exists and the following results hold true :
+	\begin{enumerate}[label=\roman*.]
+		\item   If $U \sim \text{Unif}([0,1])$ and $X = F^{-1}(U)$, then the rv $X$ has CDF $F$.
+		\item If a rv $X$ has CDF $F$, then the rv $Y= F(X)$ has distribution $Y\sim \text{Unif}([0,1])$.
+	\end{enumerate}
+	
+	\item 
+	\textbf{Proof of the theorem.}
+	
+	i. Let \( U \sim \text{Unif}(0, 1) \) and \( X = F^{-1}(U) \).
+	\[\begin{aligned}
+	\forall x\in\R,\quad	P(X \leq x) &= P(F^{-1}(U) \leq x) \\
+		&= P(U \leq F(x)) \\
+		&= F(x).
+	\end{aligned}
+	\]no longer allows sampling from
+	ii. \( Y \) takes values in \( [0, 1] \).
+	$$
+	\begin{aligned}
+		\forall y\in[0,1],\quad	P(Y \leq y) &= P(F(X) \leq y) \\
+		&= P(X \leq F^{-1}(y)) \\
+		&= F(F^{-1}(y)) \\
+		&= y.
+	\end{aligned}
+	$$
+	
+	
+	
+	\item The theorem implies that, given a random number generator (RNG) that can generate random samples with distribution $\text{Unif}([0, 1])$, we can build a rv with any continuous distribution of interest. 
+	The uniform distribution is a \textbf{universal starting point} for building rvs with other distributions. 
+	
+	\item If a probability distribution doesn't have a closed form expression for its CDF, let alone its inverse, we would be unable to generate samples from this distribution using universality of the uniform, e.g. sampling a rv with beta distribution.
+	
+	\item \textbf{Markov chain Monte Carlo}, often abbreviated as MCMC, is a sampling technique that revolutionized statistics and allowed sampling for distributions for which the CDF doesn't have a closed form expression.
+	
+	\item There are many MCMC methods, e.g., Metropolis-Hastings, Gibbs sampling, etc.
+	
+	\item Intuitively, given a probability distribution of interest, MCMC consists in building a Markov chain that converges towards this distribution.
+	
+	\item Consider a probability distribution \( \bs = (s_i)_{1\leq i\leq M} \) on state space \( \calS = \{1, \ldots, M\} \), with $M\in\N^*$. 
+	Assume that \( \forall i \in \calS:\ s_i > 0 \) (if not, remove any states \( i \) with \( s_i = 0 \) from the state space). Suppose that \( \bP = (p_{ij})_{1\leq i,j\leq M} \) is the transition matrix for a Markov chain on $\calS$.  \( \bP \) defines a Markov chain that we can simulate but that doesn't have the desired stationary distribution.
+	We will modify \( \bP \) to build a Markov chain \( X_0, X_1, \ldots \) with stationary distribution \( \bs \). 
+	
+	\item \textbf{Metropolis-Hastings algorithm.}
+	Initialize the chain as \( X_0 = k_0 \in\calS\).
+	At time step $n$, do the following:
+	\begin{enumerate}
+		\item If \( X_n = i \), propose a new state \( j \) using the transition probabilities in the \( i \)-th row of the original transition matrix \( \bP \).
+		\item Compute the acceptance probability
+		\[
+		a_{ij} = \min\left( \frac{s_j p_{ji}}{s_i p_{ij}}, 1 \right).
+		\]
+		\item Set \(Y\sim\text{Bern}(a_{ij}) \).
+		
+		\item If $Y=1$, accept the proposal, i.e., $X_{n+1} = j$. Otherwise, reject the proposal and set \( X_{n+1} = i \).
+	\end{enumerate}
+	\item The Metropolis-Hastings chain uses $\bP$ to propose where to go next, then accepts the proposal with probability \( a_{ij} \), staying in its current state in the event of a rejection.
+	
+	\item  \( p_{ij} \) in the denominator of \( a_{ij} \) will never be 0 .
+	In fact, if \( p_{ij} = 0 \) then the original chain will never propose going from \( i \) to \( j \). 
+	
+	\item After running the Metropolis-Hastings chain for a long time, the values that the chain takes can serve as samples from the desired distribution.
+	
+	\item The Metropolis-Hastings chain is \textbf{reversible} with stationary distribution \( \bs \).
+	
+\end{enumerate}
+
+
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}
+%Example 12.1.3 page 498 Blitzstein Huang
+%https://ia803404.us.archive.org/6/items/introduction-to-probability-joseph-k.-blitzstein-jessica-hwang/Introduction%20to%20Probability-Joseph%20K.%20Blitzstein%2C%20Jessica%20Hwang.pdf
+%Zipf distribution simulation). 
+Let $M \geq 2$ be an integer. An rv $X$ has the Zipf distribution with parameter $a > 0$ if its PMF is
+\[
+P(X = k) = 
+\begin{cases}
+	\displaystyle \frac{1/k^a}{\sum_{j=1}^M (1/j^a)} & \text{for } k \in \{1, 2, \ldots, M\}, \\
+	0 & \text{otherwise}.
+\end{cases}
+\]
+This distribution is widely used in linguistics to study frequencies of words.
+\begin{enumerate}
+	\item 
+	Create a Markov chain $X_0, X_1, \ldots$ whose stationary distribution is the Zipf distribution, and such that $|X_{n+1} - X_n| \leq 1$ for all $n$. Your answer should provide a simple, precise description of how each move of the chain is obtained, i.e., how to transition from $X_n$ to $X_{n+1}$ for each $n$.
+\end{enumerate}
+
+
+
+
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}
+% Blitzstein Huang  MCMC exercises
+We have a network $G$ with $n$ nodes and some edges. Each node of $G$ can either be vacant or occupied. We want to place particles on the nodes of $G$ in such a way that the particles are not too crowded. Thus, define a feasible configuration as a placement of particles such that each node is occupied by at most one particle, and no neighbor of an occupied node is occupied.
+
+Construct a Markov chain whose stationary distribution is uniform over all feasible configurations. Clearly specify the transition rule of your Markov chain, and explain why its stationary distribution is uniform.
+
+
+\stepcounter{num} 
+\paragraph{Exercise \thenum.}
+%Blitzstein Huang MCMC exercises
+This problem considers an application of MCMC techniques to image analysis. Imagine a 2D image consisting of an $L \times L$ grid of black-or-white pixels. Let $Y_j$ be the indicator of the $j$th pixel being white, for $j = 1, \ldots, L^2$. Viewing the pixels as nodes in a network, the neighbors of a pixel are the pixels immediately above, below, to the left, and to the right (except for boundary cases).
+Let $i \sim j$ stand for ``$i$ and $j$ are neighbors''. A commonly used model for the joint PMF of $Y = (Y_1, \ldots, Y_{L^2})$ is
+\[
+P(Y = y) \propto \exp\left( \beta \sum_{(i,j): i \sim j} \mathds{1}(y_i = y_j) \right).
+\]
+If $\beta$ is positive, this says that neighboring pixels prefer to have the same color. The normalizing constant of this joint PMF is a sum over all $2^{L^2}$ possible configurations, so it may be very computationally difficult to obtain. This motivates the use of MCMC to simulate from the model.
+
+\begin{enumerate}
+	\item 
+	Provide a Metropolis-Hastings algorithm for this problem, based on a proposal of picking a uniformly random site and toggling its value.
+\end{enumerate}
+
+
+\paragraph{References :} Introduction to probability (J. Blitzstein, J. Huang)
+
+
+\end{document}
