@@ -1,0 +1,99 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc} 
+\usepackage[english]{babel} 
+
+\pagestyle{empty} 
+
+\usepackage{tikzsymbols}
+\usepackage{textcomp}
+\usepackage{parskip}
+\usepackage{amsmath, amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{proof*}{Proof}
+\newtheorem{definition}{Definition}
+
+\newtheorem{exercise}{Exercise}
+\newtheorem{question}{Question}
+
+\newtheorem{example}{Example}
+
+\newtheorem{remark}{Remark}
+
+\usepackage[a4paper,left=.8cm, right=.8cm,top=1.cm,bottom=1.5cm]{geometry}
+\setlength{\columnsep}{1.2cm}
+
+\usepackage{cancel}
+\usepackage{bm}
+\usepackage{amssymb,amsfonts}
+\usepackage{mathrsfs}
+\usepackage{color}
+%\usepackage{hyperref}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{algorithmicx}
+\usepackage[ruled]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{marginnote}
+\newcommand{\Ptr}{\mathcal P^{\rm tr}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\N}{\mathbb N}
+\newcommand{\calN}{\mathcal N}
+\newcommand{\bP}{\bold P}
+\newcommand{\calK}{\mathcal K}
+\newcommand{\calF}{\mathcal F}
+\newcommand{\calH}{\mathcal H}
+\newcommand{\calP}{\mathcal P}
+\newcommand{\calC}{\mathcal C}
+\newcommand\red[1]{\textcolor{red} {#1} }
+\newcommand{\R}{\mathbb R}
+\newcommand{\bX}{\bar X}
+\newcommand{\Ktr}{\calK^{\rm tr}}
+\title{ \bfseries \Huge {Stochastic processes : Quiz}}    
+\vspace{-4cm}        
+
+\date{\today}  
+
+\vspace{-8cm}     
+
+\newcounter{num}  % Create a new counter for paragraphs
+\begin{document}
+	\maketitle
+	
+	\paragraph{Question.} What makes a stochastic process Markovian? You can choose to explain either in plain english or using a mathematical formula.
+	
+	\vspace{6cm}   
+	\paragraph{Problem.}
+	The professor warns CC-CI1 students not to use computers in the classroom.
+	Each time a student attempts pushing the boundaries by using a computer `again', the professor has probability $p>0$ of giving them another warning, and probability $1-p$ of excluding them from class.
+	Once the professor excludes the first student from class for using a computer, the professor no longer gives warnings.
+	\begin{enumerate}
+		\item How do you model this problem as a Markov chain?
+		\vspace{11cm} 
+		
+		\item Let $i$ be a transient state of the Markov chain above. 
+		What is the probability of never returning to $i$ starting from $i$?
+		\vspace{9cm} 
+		
+		\item Starting from $i$, let $X$ be the number of
+		times that the chain returns to $i$ before leaving forever.
+		Find the distribution of $X$.
+		\vspace{13cm} 
+	\end{enumerate}
+	%\newpage
+	
+	\textcolor{white}{a}
+	
+	%\vspace{24cm}
+	
+	\fbox{
+		\parbox{10cm}{
+			\textcolor{white}{a}\\
+			Full name*: \\
+			\\
+			*This is a make-up quiz due to medical absence.
+		}
+	}
+\end{document}
