@@ -1,0 +1,68 @@
+Table of contents (2025 spring session as a reference) :
+
+ A/ Preliminaries
+
+• 1.Random Variables and Probability reminders (1 session)
+
+• 2. Inequalities and limit theorems (1 session)
+
+* Tutorial session
+
+B/ Introduction to stochastic Processes
+
+• 1. Definitions and examples of stochastic Processes (.5 session)
+
+• 2. Random Walks and application to the gambler's ruin (1.5 session)
+
+* Tutorial session
+
+• 3. Bernoulli processes (intro to arrival processes) (1.5 session)
+
+* Tutorial session (2hours)
+
+C/ Poisson Processes
+
+•1. Definition and some properties of Poisson processes: inter-arrival time distribution, time to the n-th arrival, competing exponentials (1.5 session)
+
+•2. Merging, splitting and conditioning Poisson processes (1.65 session)
+
+* 2 Tutorial sessions (3hours)
+
+D/ Discrete-Time Markov Chains
+
+•1. The Markov property, dynamics of the Markov Chain, properties of Markov Chains,  (1 session)
+
+•2. Classification of states  (1 session)
+
+* Tutorial session 
+
+•3. Stationary distribution (definition, example, Questions (existence, uniqueness, convergence, how to compute), existence and uniqueness theorem, aperiodicity condition (+proof),
+
+•4. Convergence theorem, mean recurrence time (def, example, comparison), time reversibility (def, example), birth–death processes (def, example, proposition+proof)
+
+* 2 hours (1.5 + 0.5) Tutorial session
+
+E/ Continuous-Time Markov Chains
+
+•1. Definition (example), transition matrix, Chapman-Kolmogorov equations, marginal distribution, the generator,
+
+•2. forward and backward equations, holding times, Convergence theorem
+
+•3. Proof of the convergence condition, Birth-death processes, Reversibility, stationary distribution for bit-death processes Explosion for infinite state space CTMCs (1h15mins)
+
+*Tutorial session (15min + 1h)
+
+F/ Monte Carlo simulation
+
+2h (1h+1h) lecture (an additional 30min would be ideal)
+
+G/ Brownian motion
+
+1h (the ideal would be 1h30 to 2h)
+
+* 4 pre-final tutorial sessions (1h*2, 1.5h*2)
+
+
+
+
+ 
